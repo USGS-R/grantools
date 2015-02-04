@@ -3,20 +3,34 @@ library(miniCRAN)
 library(devtools)
 library(tools)
 
+################################################################################
+## These options may need to be edited for your local system
+## we try to infer the rest
+################################################################################
+gran_dir = '../GRAN'
+src_dir = file.path(gran_dir, 'src', 'contrib')
+################################################################################
+## /options
+################################################################################
+
 r_maj_min = substr(paste0(R.Version()$major, '.', R.Version()$minor), 0, 3)
 os = Sys.info()['sysname']
 
+## You 
+
 if(os == 'Windows'){
 	build_ext = '.zip'
+	build_dir = file.path(gran_dir, 'bin', 'windows', 'contrib', r_maj_min)
+	pkg_type = 'win.binary'
+	
 }else if(os == 'Darwin'){
 	build_ext = '.tgz'
+	build_dir = file.path(gran_dir, 'bin', 'macosx', 'mavericks', 'contrib', r_maj_min)
+	pkg_type = 'mac.binary' #can't use getOPtion('pkgType') with mavericks for some reason
+	
 }else{
 	stop('unrecognized OS type', os)
 }
-
-gran_dir = '../GRAN'
-src_dir = file.path(gran_dir, 'src', 'contrib')
-build_dir = file.path(gran_dir, 'bin', 'windows', 'contrib', r_maj_min)
 
 
 gran <- c(GRAN="http://owi.usgs.gov/R")
@@ -44,8 +58,8 @@ for(i in 1:nrow(gran_packages)){
 }
 
 #Once done, write PACKAGES file, use default pkgType for this platform (mac/win)
-write_PACKAGES(build_dir, type=getOption('pkgType'))
+write_PACKAGES(build_dir, type=pkg_type)
 
 ## sync with GRAN
 #email luke
-
+# TODO: Implement S3 sync
