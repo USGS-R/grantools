@@ -14,7 +14,7 @@ src_dir = file.path(gran_dir, 'src', 'contrib')
 
 packages = read.table('gran_source_list.tsv', sep='\t', header=TRUE,stringsAsFactors=FALSE)
 
-dir.create(src_dir)
+dir.create(src_dir, recursive = TRUE)
 scratch = tempdir()
 
 for(i in 1:nrow(packages)){
