@@ -34,11 +34,13 @@ if(os == 'Windows'){
 
 
 gran <- c(GRAN="http://owi.usgs.gov/R")
-gran_packages = available.packages(contriburl = contrib.url(gran, type='source'))
+gran_packages = available.packages(contriburl = contrib.url(gran, type='source'), type='source')
 
 makeRepo(gran_packages, path=gran_dir, repos=gran, type="source")
 
 
+#kill and create build dir (to eliminate old versions which could hang out)
+unlink(file.path(build_dir), recursive=TRUE)
 dir.create(build_dir, recursive=TRUE)
 
 

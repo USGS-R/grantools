@@ -14,6 +14,7 @@ src_dir = file.path(gran_dir, 'src', 'contrib')
 
 packages = read.table('gran_source_list.tsv', sep='\t', header=TRUE,stringsAsFactors=FALSE)
 
+unlink(file.path(gran_dir, 'src'), recursive=TRUE)
 dir.create(src_dir, recursive = TRUE)
 scratch = tempdir()
 
