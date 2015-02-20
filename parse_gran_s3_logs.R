@@ -23,6 +23,7 @@ names(all_logs) = c('owner', 'bucket', 'time', 'time2', 'ip', 'requester', 'requ
 
 
 library(geocode)
+library(stringr)
 all_logs$country = geocode.ips.country(all_logs$ip)$country
 
 
@@ -46,10 +47,12 @@ just_packages = filter_packages(all_logs)
 	
 extract_package_names = function(keys){
 	
-	
+  names =	str_match(basename(keys), '(.*)_.*\\.((tar\\.gz)|tgz|zip)')
+  
+	return(names[,2])
 }
 
-extract_package_names(just_packages$key)
+just_packages$packagename = extract_package_names(just_packages$key)
 
 
 
