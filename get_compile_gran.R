@@ -36,6 +36,8 @@ if(os == 'Windows'){
 gran <- c(GRAN="http://owi.usgs.gov/R")
 gran_packages = available.packages(contriburl = contrib.url(gran, type='source'), type='source')
 
+
+unlink(file.path(gran_dir, 'src'), recursive=TRUE)
 makeRepo(gran_packages, path=gran_dir, repos=gran, type="source")
 
 
@@ -55,6 +57,9 @@ for(i in 1:nrow(gran_packages)){
 	cmd = paste0('R CMD INSTALL ', package_path, ' --build')
 	
 	res = system(cmd)
+	cat(rep('#',40), '\n')
+	cat('cmd return:', res, '\n')
+	cat(rep('#',40), '\n')
 	
 	file.rename(binary_path, binary_dest)
 }
