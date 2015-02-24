@@ -35,8 +35,11 @@ for(i in 1:nrow(packages)){
 	
 	built_pkg = Sys.glob(paste0(basename(packages$package[i]), '*.tar.gz'))
 	
-	file.rename(built_pkg, file.path(src_dir, basename(built_pkg)))
+	issuccess = file.rename(built_pkg, file.path(src_dir, basename(built_pkg)))
 	
+	if(!issuccess){
+		stop('Cannot move package', packages$package[i], 'to local GRAN area')
+	}
 }
 
 write_PACKAGES(src_dir, type='source')
