@@ -1,6 +1,6 @@
 package	tag
-usgs-r/dataRetrieval	v2.1.2.2
-usgs-r/EGRET	v2.1.2.1
+usgs-r/dataRetrieval	v2.1.3
+usgs-r/EGRET	2.1.3
 usgs-r/sbtools	v0.6.1
 usgs-r/geoknife	v0.5.1
 usgs-r/powstreams	v0.4.0
