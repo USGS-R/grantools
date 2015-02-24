@@ -1,12 +1,13 @@
 
 
 #The text to be added to an .Rprofile file
-repo_text = 'options(repos=c(getOption(\'repos\'), USGS=\'http://owi.usgs.gov/R\'))\n'
+repo_text = paste0('#Generated line by owi.usgs.gov/R/add_gran_repo.R: Do not edit by hand\n', 
+            'options(repos=c(getOption(\'repos\'), USGS=\'http://owi.usgs.gov/R\'))\n')
 
 
 
 #Check to see if they already have USGS repo setup
-if(any(names(getOption('repos')) %in% 'USGS')){
+if(any(names(getOption('repos')) %in% 'USGS') | any(getOption('repos') %in% 'http://owi.usgs.gov/R')){
 	stop('You already have USGS:GRAN setup as a repository, skipping...')
 }
 
@@ -45,5 +46,5 @@ if(os == 'Windows'){
 }
 
 
-warning('Your Rprofile has been updated to include GRAN.\nPlease restart R for changes to take effect.')
+cat('Your Rprofile has been updated to include GRAN.\nPlease restart R for changes to take effect.')
 
