@@ -3,6 +3,11 @@
 
 library(tools)
 library(devtools)
+library(httr)
+
+options(repos=c(getOption('repos'), USGS='http://owi.usgs.gov/R'))
+
+
 ################################################################################
 ## These options may need to be edited for your local system
 ## we try to infer the rest
@@ -24,8 +29,9 @@ scratch = tempdir()
 
 for(i in 1:nrow(packages)){
 	url = paste0('http://github.com/', packages$package[i], '/archive/', packages$tag[i], '.zip')
-	download.file(url, destfile = file.path(scratch, 'package.zip'))
 
+	GET(url, write_disk(file.path(scratch, 'package.zip'), overwrite=TRUE))
+	
 	unzip(file.path(scratch, 'package.zip'), exdir=file.path(scratch, packages$package[i]))
 	
 	pkgdirname = Sys.glob(paste0(scratch, '/', packages$package[i], '/', basename(packages$package[i]), '*'))
