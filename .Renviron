@@ -1,0 +1,3 @@
+R_LIBS_USER="./gran_build_libs"
+R_ENVIRON_USER=""
+R_PROFILE_USER =""
