@@ -2,6 +2,12 @@
 ## Download specific tagged packages from Github and package them 
 
 library(tools)
+library(devtools)
+library(httr)
+
+options(repos=c(getOption('repos'), USGS='http://owi.usgs.gov/R'))
+
+
 ################################################################################
 ## These options may need to be edited for your local system
 ## we try to infer the rest
@@ -12,6 +18,9 @@ src_dir = file.path(gran_dir, 'src', 'contrib')
 ## /options
 ################################################################################
 
+##Update all the local packages so we're always working with the latest
+update.packages(ask=FALSE, lib.loc = Sys.getenv('R_LIBS_USER'))
+
 packages = read.table('gran_source_list.tsv', sep='\t', header=TRUE,stringsAsFactors=FALSE)
 
 unlink(file.path(gran_dir, 'src'), recursive=TRUE)
@@ -20,23 +29,29 @@ scratch = tempdir()
 
 for(i in 1:nrow(packages)){
 	url = paste0('http://github.com/', packages$package[i], '/archive/', packages$tag[i], '.zip')
-	download.file(url, destfile = file.path(scratch, 'package.zip'))
 
+	GET(url, write_disk(file.path(scratch, 'package.zip'), overwrite=TRUE))
+	
 	unzip(file.path(scratch, 'package.zip'), exdir=file.path(scratch, packages$package[i]))
 	
 	pkgdirname = Sys.glob(paste0(scratch, '/', packages$package[i], '/', basename(packages$package[i]), '*'))
+	
+	install_deps(pkgdirname)
 	
 	if(length(pkgdirname) > 1){
 		stop('too many files in downloaded zip, ambiguous build info')
 	}
 	
-	cmd = paste0('R CMD build ', pkgdirname, ' --no-build-vignettes')
+	cmd = paste0('R CMD build ', pkgdirname)
 	system(cmd)
 	
 	built_pkg = Sys.glob(paste0(basename(packages$package[i]), '*.tar.gz'))
 	
-	file.rename(built_pkg, file.path(src_dir, basename(built_pkg)))
+	issuccess = file.rename(built_pkg, file.path(src_dir, basename(built_pkg)))
 	
+	if(!issuccess){
+		stop('Cannot move package', packages$package[i], 'to local GRAN area')
+	}
 }
 
 write_PACKAGES(src_dir, type='source')
