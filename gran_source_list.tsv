@@ -9,3 +9,5 @@ usgs-r/USGSHydroOpt	v1.0.0
 usgs-r/smwrData	v1.0.3
 usgs-r/EflowStats	v4.0.1
 usgs-r/smwrBase	v1.0.3
+GLEON/GLMr	v2.0.10
+usgs-r/glmtools	v0.6.1
