@@ -28,6 +28,7 @@ dir.create(src_dir, recursive = TRUE)
 scratch = tempdir()
 
 for(i in 1:nrow(packages)){
+
 	url = paste0('http://github.com/', packages$package[i], '/archive/', packages$tag[i], '.zip')
 
 	GET(url, write_disk(file.path(scratch, 'package.zip'), overwrite=TRUE))
@@ -36,7 +37,7 @@ for(i in 1:nrow(packages)){
 	
 	pkgdirname = Sys.glob(paste0(scratch, '/', packages$package[i], '/', basename(packages$package[i]), '*'))
 	
-	install_deps(pkgdirname)
+	devtools::install_deps(pkgdirname)
 	
 	if(length(pkgdirname) > 1){
 		stop('too many files in downloaded zip, ambiguous build info')
