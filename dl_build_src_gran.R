@@ -28,9 +28,7 @@ dir.create(src_dir, recursive = TRUE)
 scratch = tempdir()
 
 for(i in 1:nrow(packages)){
-	
-	cat(packages$package[i])
-	
+
 	url = paste0('http://github.com/', packages$package[i], '/archive/', packages$tag[i], '.zip')
 
 	GET(url, write_disk(file.path(scratch, 'package.zip'), overwrite=TRUE))
