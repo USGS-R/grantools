@@ -63,5 +63,6 @@ package_summary = group_by(just_packages, packagename) %>%
 									summarise(dl_count = length(packagename)) %>% 
 									arrange(desc(dl_count))
 
+write.csv(package_summary, '~/gran_package_dl_stats.csv', row.names=FALSE)
 
 
