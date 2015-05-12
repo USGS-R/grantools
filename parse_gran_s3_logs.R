@@ -1,4 +1,8 @@
 
+library(geocode)
+library(stringr)
+library(dplyr)
+
 ##Parse logs
 
 log_dir = 'd:/logs'
@@ -22,16 +26,15 @@ names(all_logs) = c('owner', 'bucket', 'time', 'time2', 'ip', 'requester', 'requ
 										'user-agent', 'versionid')
 
 
-library(geocode)
-library(stringr)
-all_logs$country = geocode.ips.country(all_logs$ip)$country
+
+#all_logs$country = geocode.ips.country(all_logs$ip)$country
 
 
 filter_packages = function(df){
 	
 	
-	all_get_r = all_logs[all_logs$operation == 'WEBSITE.GET.OBJECT' &
-											 	grepl(pattern='R/.*' , all_gets$key), ]
+	all_get_r = df[df$operation == 'WEBSITE.GET.OBJECT' &
+											 	grepl(pattern='R/.*' , df$key), ]
 	
 	
 	#grab !PACKAGES and just .zip or .tar.gz or .tgz file downloads
@@ -43,7 +46,7 @@ filter_packages = function(df){
 }
 
 just_packages = filter_packages(all_logs)
-
+just_packages$country = geocode.ips.country(just_packages$ip)$country
 	
 extract_package_names = function(keys){
 	
@@ -53,6 +56,12 @@ extract_package_names = function(keys){
 }
 
 just_packages$packagename = extract_package_names(just_packages$key)
+
+write.csv(just_packages, '~/gran_dl_stats.csv', row.names=FALSE)
+
+package_summary = group_by(just_packages, packagename) %>% 
+									summarise(dl_count = length(packagename)) %>% 
+									arrange(desc(dl_count))
 
 
 
