@@ -11,7 +11,7 @@ usgs-r/EflowStats	v4.0.2
 GLEON/GLMr	v3.1.1
 ldecicco-usgs/EGRETci	v0.0.8
 usgs-r/smwrBase	1.0.4
-usgs-r/smwrGraphs	1.0.7
+usgs-r/smwrGraphs	v1.0.10
 usgs-r/glmtools	v0.9.3
 usgs-r/powstreams	v0.5.1
 usgs-r/smwrStats	0.7.2
