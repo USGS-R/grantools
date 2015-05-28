@@ -1,6 +1,6 @@
 library(tools)
 
-options(repos=c(getOption('repos'), USGS='http://owi.usgs.gov/R'))
+options(repos=c(CRAN="http://cran.rstudio.com", USGS='http://owi.usgs.gov/R'))
 
 ################################################################################
 ## These options may need to be edited for your local system
