@@ -1,5 +1,7 @@
 library(tools)
 
+options(repos=c(getOption('repos'), USGS='http://owi.usgs.gov/R'))
+
 ################################################################################
 ## These options may need to be edited for your local system
 ## we try to infer the rest
