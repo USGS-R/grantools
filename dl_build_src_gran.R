@@ -43,7 +43,7 @@ for(i in 1:nrow(packages)){
 		stop('too many files in downloaded zip, ambiguous build info')
 	}
 	
-	cmd = paste0('R CMD build ', pkgdirname, ' --no-build-vignettes')
+	cmd = paste0('R CMD build ', pkgdirname)
 	system(cmd)
 	
 	built_pkg = Sys.glob(paste0(basename(packages$package[i]), '*.tar.gz'))
