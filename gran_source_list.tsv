@@ -1,5 +1,5 @@
 package	tag
-usgs-r/dataRetrieval	2.2.1
+usgs-r/dataRetrieval	v2.2.2
 usgs-r/EGRET	v2.2.0
 usgs-r/sbtools	v0.8.2
 usgs-r/geoknife	v0.10.3
@@ -9,7 +9,7 @@ usgs-r/smwrData	1.0.4
 usgs-r/hazardItems	v2.0.5
 usgs-r/EflowStats	v4.0.2
 GLEON/GLMr	v3.1.1
-ldecicco-usgs/EGRETci	v0.0.8
+ldecicco-usgs/EGRETci	v0.0.9
 usgs-r/smwrBase	1.0.4
 usgs-r/smwrGraphs	v1.0.10
 usgs-r/glmtools	v0.9.7
