@@ -10,7 +10,7 @@ usgs-r/smwrData	1.0.4
 usgs-r/hazardItems	v2.0.6
 usgs-r/EflowStats	v4.1.0
 GLEON/GLMr	v3.1.1
-USGS-R/EGRETci	v0.0.9
+USGS-R/EGRETci	v1.0.0
 usgs-r/smwrBase	1.0.4
 usgs-r/smwrGraphs	v1.0.11
 usgs-r/glmtools	v0.9.8
@@ -22,4 +22,4 @@ usgs-r/rloadest	v0.4.2
 usgs-r/gsplot	v0.2.2
 usgs-r/gsIntroR	v0.1.1
 appling/unitted	v0.2.4
-usgs-r/toxEval	v0.1.1
+usgs-r/toxEval	v0.1.2
