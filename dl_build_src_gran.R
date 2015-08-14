@@ -45,7 +45,7 @@ for(i in 1:nrow(packages)){
 	
 	cmd = paste0('R CMD build ', pkgdirname)
 	system(cmd)
-	
+	 
 	built_pkg = Sys.glob(paste0(basename(packages$package[i]), '*.tar.gz'))
 	
 	issuccess = file.rename(built_pkg, file.path(src_dir, basename(built_pkg)))
