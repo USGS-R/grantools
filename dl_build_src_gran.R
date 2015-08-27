@@ -45,8 +45,10 @@ for(i in 1:nrow(packages)){
 	
 	cmd = paste0('R CMD build ', pkgdirname, ' --no-build-vignettes --no-manual')
 	system(cmd)
-	 
-	built_pkg = Sys.glob(paste0(basename(packages$package[i]), '*.tar.gz'))
+	write_PACKAGES(getwd(), type='source')
+	gran_packages = data.frame(available.packages(paste0('file:', getwd()), type='source'))
+	
+	built_pkg = Sys.glob(paste0(gran_packages$Package,"_",gran_packages$Version,".tar.gz"))
 	
 	issuccess = file.rename(built_pkg, file.path(src_dir, basename(built_pkg)))
 	
