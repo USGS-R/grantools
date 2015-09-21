@@ -2,7 +2,11 @@
 ## Download specific tagged packages from Github and package them 
 
 library(tools)
+if (!require(devtools))
+	install.packages('devtools')
 library(devtools)
+if (!require(devtools))
+	install.packages('httr')
 library(httr)
 
 options(repos=c(getOption('repos'), USGS='http://owi.usgs.gov/R'))
@@ -37,7 +41,7 @@ for(i in 1:nrow(packages)){
 	
 	pkgdirname = Sys.glob(paste0(scratch, '/', packages$package[i], '/', basename(packages$package[i]), '*'))
 	
-	devtools::install_deps(pkgdirname)
+	devtools::install_deps(pkgdirname,type = 'both')
 	
 	if(length(pkgdirname) > 1){
 		stop('too many files in downloaded zip, ambiguous build info')
