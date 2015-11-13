@@ -2,7 +2,7 @@ package	tag
 usgs-r/dataRetrieval	2.3.1
 usgs-r/EGRET	2.4.1
 usgs-r/sbtools	v0.11.6
-usgs-r/geoknife	v1.1.0
+usgs-r/geoknife	v1.1.1
 usgs-r/streamMetabolizer	v0.6.0
 usgs-r/mda.streams	v0.7.34
 usgs-r/USGSHydroOpt	v1.0.1
