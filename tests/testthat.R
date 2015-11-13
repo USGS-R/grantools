@@ -1,2 +1,2 @@
 library(testthat)
-test_check('buildgran')
+test_check('granbuild')
