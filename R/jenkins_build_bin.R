@@ -1,12 +1,17 @@
-
-#' @import devtools tools
+#' build binaries on jenkins
+#' 
+#' builds GRAN binaries from jenkins machine
+#' 
+#' @import tools
 #' @export
-dl_build_bin <- function(sync=FALSE){
+jenkins_build_bin = function(){
+	options(repos=c(CRAN="http://cran.rstudio.com", USGS='http://owi.usgs.gov/R'))
+	
 	################################################################################
 	## These options may need to be edited for your local system
 	## we try to infer the rest
 	################################################################################
-	gran_dir = '../GRAN'
+	gran_dir = './GRAN'
 	src_dir = file.path(gran_dir, 'src', 'contrib')
 	################################################################################
 	## /options
@@ -33,8 +38,9 @@ dl_build_bin <- function(sync=FALSE){
 		stop('unrecognized OS type', os)
 	}
 	
+	repos = c(GRAN="file:./GRAN", CRAN="http://cran.rstudio.com")
 	
-	gran <- c(GRAN="http://owi.usgs.gov/R")
+	gran <- c(GRAN="file:./GRAN")
 	#gran_packages = available.packages(contriburl = contrib.url(gran, type='source'), type='source')
 	gran_packages = available.packages(paste0('file:', src_dir), type='source')
 	
@@ -56,38 +62,37 @@ dl_build_bin <- function(sync=FALSE){
 		binary_path = file.path('.', binary)
 		binary_dest = file.path(build_dir, binary)
 		
-		cmd = paste0('R CMD INSTALL ', package_path, ' --build')
+		all_deps = package_dependencies(gran_packages[i,'Package'], 
+																		db=available.packages(
+																			type='source', 
+																			contriburl=contrib.url(repos, type='source')),
+																		recursive=TRUE)
 		
-		results[i] = system(cmd)
-		cat(rep('#',40), '\n')
-		cat(gran_packages[i,'Package'],':', results[i], '\n')
-		cat(rep('#',40), '\n')
+		to_install = all_deps[[1]][!all_deps[[1]] %in% as.vector(installed.packages()[,'Package'])]
 		
-		if(results[i] != 0){
-			warning(gran_packages[i,'Package'], 'failed while compiling!!')
+		if(length(to_install) > 0){
+			#install.packages(to_install, lib='gran_build_libs', repos=repos, type='source')
+			install.packages(to_install, lib='gran_build_libs')
 		}
+		
+		#devtools::build(package_path, path = '.', binary = TRUE )
+		install.packages(gran_packages[i,'Package'], type='source', INSTALL_opts='--build', repos=repos)
+		
+		#cmd = paste0('R CMD INSTALL ', package_path, ' --build')
+		
+		#results[i] = system(cmd)
+		
+		cat(rep('#',40), '\n')
+		#cat(gran_packages[i,'Package'],':', results[i], '\n')
+		cat(rep('#',40), '\n')
+		
+		#if(results[i] != 0){
+		#    warning(gran_packages[i,'Package'], 'failed while compiling!!')
+		#}
 		
 		file.rename(binary_path, binary_dest)
 	}
 	
-	if(any(results!=0)){
-		stop('Error in one of the package compiles')
-	}
-	
-	#Once done, write PACKAGES file, use default pkgType for this platform (mac/win)
 	write_PACKAGES(build_dir, type=pkg_type)
-	
-	## sync with GRAN
-	#email luke
-	# TODO: Implement S3 sync
-	#Delete src directory
-	if (sync){
-		system(paste0('aws s3 sync ', src_dir, ' ', s3_path, ' --delete'))
-		
-		system(paste0('aws s3 sync ', src_dir, ' ', s3_path, ' --delete'))
-	}
-	return(build_dir)
-
 }
-
 

@@ -21,8 +21,10 @@ check_src_tags <- function(){
 	packages = read_src_list()
 	
 	for(i in 1:nrow(packages)){
-		url = paste0('http://github.com/', packages$package[i], '/archive/', packages$tag[i], '.zip')
-		GET(url, write_disk(file.path(tempdir(), 'package.zip'), overwrite=TRUE))
+		url <- paste0('http://github.com/', packages$package[i], '/archive/', packages$tag[i], '.zip')
+		r <- HEAD(url)
+		if (r$status_code != 200)
+			stop(url,'returned status code',r$status_code)
 	}
 	return(TRUE)
 }

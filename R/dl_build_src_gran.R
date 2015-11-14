@@ -1,5 +1,7 @@
-
-
+#' download and build packages w/ deps
+#' 
+#' Download and build GRAN packages w/ GRAN and CRAN deps
+#' 
 #' @import httr devtools
 #' @export
 dl_build_src <- function(){
