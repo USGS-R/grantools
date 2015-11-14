@@ -1,4 +1,9 @@
-
+#' build GRAN binaries
+#' 
+#' build binary packages for GRAN from source
+#' 
+#' @param sync use S3 sync with packages?
+#' 
 #' @import devtools tools
 #' @export
 dl_build_bin <- function(sync=FALSE){
