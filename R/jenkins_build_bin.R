@@ -38,14 +38,10 @@ jenkins_build_bin = function(){
 		stop('unrecognized OS type', os)
 	}
 	
-	repos = c(GRAN="file:./GRAN", CRAN="http://cran.rstudio.com")
-	
-	gran <- c(GRAN="file:./GRAN")
-	#gran_packages = available.packages(contriburl = contrib.url(gran, type='source'), type='source')
+	repos = c(GRAN=paste0("file:",gran_dir), CRAN="http://cran.rstudio.com")
+
 	gran_packages = available.packages(paste0('file:', src_dir), type='source')
-	
-	#unlink(file.path(gran_dir, 'src'), recursive=TRUE)
-	#makeRepo(gran_packages, path=gran_dir, repos=gran, type="source")
+
 	
 	
 	#kill and create build dir (to eliminate old versions which could hang out)
@@ -71,25 +67,11 @@ jenkins_build_bin = function(){
 		to_install = all_deps[[1]][!all_deps[[1]] %in% as.vector(installed.packages()[,'Package'])]
 		
 		if(length(to_install) > 0){
-			#install.packages(to_install, lib='gran_build_libs', repos=repos, type='source')
 			install.packages(to_install, lib='gran_build_libs')
 		}
 		
-		#devtools::build(package_path, path = '.', binary = TRUE )
 		install.packages(gran_packages[i,'Package'], type='source', INSTALL_opts='--build', repos=repos)
-		
-		#cmd = paste0('R CMD INSTALL ', package_path, ' --build')
-		
-		#results[i] = system(cmd)
-		
-		cat(rep('#',40), '\n')
-		#cat(gran_packages[i,'Package'],':', results[i], '\n')
-		cat(rep('#',40), '\n')
-		
-		#if(results[i] != 0){
-		#    warning(gran_packages[i,'Package'], 'failed while compiling!!')
-		#}
-		
+
 		file.rename(binary_path, binary_dest)
 	}
 	

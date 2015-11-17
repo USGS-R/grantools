@@ -18,17 +18,17 @@ dl_build_bin <- function(sync=FALSE, GRAN.dir = '../GRAN'){
 	## /options
 	################################################################################
 	
-	r_maj_min = substr(paste0(R.Version()$major, '.', R.Version()$minor), 0, 3)
-	os = Sys.info()['sysname']
+
 	
 	## You 
-	
+	os = Sys.info()['sysname']
+	r_maj_min = substr(paste0(R.Version()$major, '.', R.Version()$minor), 0, 3)
 	if(os == 'Windows'){
 		build_ext = '.zip'
 		s3_path = paste0('s3://owi.usgs.gov/R/bin/windows/contrib/', r_maj_min)
 		build_dir = file.path(GRAN.dir, 'bin', 'windows', 'contrib', r_maj_min)
 		pkg_type = 'win.binary'
-		
+
 	}else if(os == 'Darwin'){
 		build_ext = '.tgz'
 		s3_path = paste0('s3://owi.usgs.gov/R/bin/macosx/mavericks/contrib/', r_maj_min)
@@ -39,8 +39,6 @@ dl_build_bin <- function(sync=FALSE, GRAN.dir = '../GRAN'){
 		stop('unrecognized OS type', os)
 	}
 	
-	
-	gran <- c(GRAN="http://owi.usgs.gov/R")
 	gran_packages = available.packages(paste0('file:', src_dir), type='source')
 	
 	
@@ -88,6 +86,8 @@ dl_build_bin <- function(sync=FALSE, GRAN.dir = '../GRAN'){
 		
 		system(paste0('aws s3 sync ', src_dir, ' ', s3_path, ' --delete'))
 	}
+
+	
 	return(build_dir)
 
 }
