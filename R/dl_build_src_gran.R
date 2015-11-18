@@ -2,28 +2,29 @@
 #' 
 #' Download and build GRAN packages w/ GRAN and CRAN deps
 #' 
+#' @param GRAN.dir local directory for GRAN built packages
+#' 
 #' @import httr devtools
 #' @export
-dl_build_src <- function(){
-	options(repos=c(getOption('repos'), USGS='http://owi.usgs.gov/R'))
+dl_build_src <- function(GRAN.dir = '../GRAN'){
+	repos=c(CRAN="https://cran.rstudio.com/", USGS='http://owi.usgs.gov/R')
 	
 	
 	################################################################################
 	## These options may need to be edited for your local system
 	## we try to infer the rest
 	################################################################################
-	gran_dir = '../GRAN'
-	src_dir = file.path(gran_dir, 'src', 'contrib')
+	src_dir = file.path(GRAN.dir, 'src', 'contrib')
 	################################################################################
 	## /options
 	################################################################################
 	
 	##Update all the local packages so we're always working with the latest
-	update.packages(ask=FALSE, lib.loc = Sys.getenv('R_LIBS_USER'))
+	update.packages(ask=FALSE, lib.loc = Sys.getenv('R_LIBS_USER'), repos=repos)
 	
 	packages = read_src_list()
 	
-	unlink(file.path(gran_dir, 'src'), recursive=TRUE)
+	unlink(file.path(GRAN.dir, 'src'), recursive=TRUE)
 	dir.create(src_dir, recursive = TRUE)
 	scratch = tempdir()
 	
