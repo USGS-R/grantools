@@ -12,7 +12,6 @@ dl_build_bin <- function(sync=FALSE, GRAN.dir = '../GRAN'){
 	## These options may need to be edited for your local system
 	## we try to infer the rest
 	################################################################################
-	GRAN.dir = '../GRAN'
 	src_dir = file.path(GRAN.dir, 'src', 'contrib')
 	################################################################################
 	## /options
@@ -22,7 +21,7 @@ dl_build_bin <- function(sync=FALSE, GRAN.dir = '../GRAN'){
 	
 	## You 
 	os = Sys.info()['sysname']
-	r_maj_min = substr(paste0(R.Version()$major, '.', R.Version()$minor), 0, 3)
+	r_maj_min = dir_version()
 	if(os == 'Windows'){
 		build_ext = '.zip'
 		s3_path = paste0('s3://owi.usgs.gov/R/bin/windows/contrib/', r_maj_min)
