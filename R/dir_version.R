@@ -10,6 +10,30 @@ dir_version <- function(){
   
 }
 
+
+#' set directory version of R
+#' 
+#' Set version of R as major.minor for current. As character.
+#' 
+#' @param version the major.minor version to use
+#' 
+#' @examples 
+#' \dontrun{
+#' dir_version()
+#' set_version('3.3')
+#' }
+#' @export
 set_version <- function(version){
-  system(sprintf('ln -sfhv /Library/Frameworks/R.framework/Versions/%s /Library/Frameworks/R.framework/Versions/Current', version))
+	
+	os = Sys.info()['sysname']
+	if (os == 'Darwin'){
+		current.pointer <- '/Library/Frameworks/R.framework/Versions/Current'
+		set.dir <- sprintf('/Library/Frameworks/R.framework/Versions/%s', version)
+		if (dir.exists(set.dir))
+			system(sprintf('ln -sfhv %s %s', set.dir, current.pointer))
+		else 
+			warning(set.dir, ' does not exist.', call. = FALSE)
+	} else {
+		message('os ', os, ' is not currently supported')
+	}
 }
