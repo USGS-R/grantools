@@ -7,7 +7,7 @@
 #' @import httr devtools
 #' @export
 dl_build_src <- function(GRAN.dir = '../GRAN'){
-	options(repos=c(CRAN="https://cran.rstudio.com/", USGS='http://owi.usgs.gov/R'))
+	repos=c(CRAN="https://cran.rstudio.com/", USGS='http://owi.usgs.gov/R')
 	
 	
 	################################################################################
@@ -20,7 +20,7 @@ dl_build_src <- function(GRAN.dir = '../GRAN'){
 	################################################################################
 	
 	##Update all the local packages so we're always working with the latest
-	update.packages(ask=FALSE, lib.loc = Sys.getenv('R_LIBS_USER'))
+	update.packages(ask=FALSE, lib.loc = Sys.getenv('R_LIBS_USER'), repos=repos)
 	
 	packages = read_src_list()
 	
