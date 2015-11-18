@@ -14,7 +14,6 @@ dl_build_src <- function(GRAN.dir = '../GRAN'){
 	## These options may need to be edited for your local system
 	## we try to infer the rest
 	################################################################################
-	GRAN.dir = '../GRAN'
 	src_dir = file.path(GRAN.dir, 'src', 'contrib')
 	################################################################################
 	## /options
