@@ -34,11 +34,43 @@ dl_build_bin()
 ```
 
 #### building from jenkins  
-with `grantools` installed:  
+Windows Powershell commands:
 ```r
-library(grantools)
-dl_build_src()
-jenkins_build_src()
+if not exist gran_build_libs mkdir gran_build_libs
+if not exist .Renviron echo "R_LIBS_USER=\"./gran_build_libs\"" > .Renviron
+
+REM If the libs directory is still around, it may have 
+REM libraries from the wrong version of R in it. Start fresh. 
+
+rmdir gran_build_libs /S /Q
+mkdir gran_build_libs
+```
+
+```
+REM Set the PATH to not include R. This is a bit of a hack
+
+set "PATH=C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\AMD APP\bin\x86_64;C:\Program Files (x86)\AMD APP\bin\x86;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Git\cmd;C:\Program Files (x86)\MiKTeX 2.9\miktex\bin\;C:\Program Files\Amazon\AWSCLI\;C:\Program Files (x86)\Pandoc\"
+
+set "PATH=c:\Rtools\bin;c:\Rtools\gcc-4.6.3\bin;C:\Program Files\R\R-3.1.3\bin;%PATH%"
+
+pandoc --version
+
+Rscript -e "install.packages('devtools', lib='gran_build_libs', repos='http://cran.us.r-project.org')"
+Rscript -e "library(devtools);install_github('USGS-R/grantools');library(granbuild);dl_build_src();jenkins_build_bin()"
+```
+
+```
+REM Set the PATH to not include R. This is a bit of a hack
+
+set "PATH=C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\AMD APP\bin\x86_64;C:\Program Files (x86)\AMD APP\bin\x86;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Git\cmd;C:\Program Files (x86)\MiKTeX 2.9\miktex\bin\;C:\Program Files\Amazon\AWSCLI\;C:\Program Files (x86)\Pandoc\"
+
+set "PATH=c:\Rtools\bin;c:\Rtools\gcc-4.6.3\bin;C:\Program Files\R\R-3.2.2\bin;%PATH%"
+
+rmdir gran_build_libs /S /Q
+mkdir gran_build_libs
+
+Rscript -e "install.packages('devtools', lib='gran_build_libs', repos='http://cran.us.r-project.org')"
+Rscript -e "library(devtools);install_github('USGS-R/grantools');library(granbuild);jenkins_build_bin()"
 ```
 
 ##Disclaimer
