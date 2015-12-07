@@ -3,8 +3,8 @@ usgs-r/dataRetrieval	2.4.2
 usgs-r/EGRET	2.4.1
 usgs-r/sbtools	v0.13.2
 usgs-r/geoknife	v1.1.1
-usgs-r/streamMetabolizer	v0.7.1.1
-usgs-r/mda.streams	v0.8.8.3
+usgs-r/streamMetabolizer	v0.7.1.3
+usgs-r/mda.streams	v0.8.8.7
 usgs-r/USGSHydroOpt	v1.0.1
 usgs-r/smwrData	v1.1.1
 usgs-r/hazardItems	v2.0.6
@@ -15,7 +15,7 @@ USGS-R/EGRETci	v1.0.0
 usgs-r/smwrBase	v1.1.1
 usgs-r/smwrGraphs	v1.1.0
 usgs-r/glmtools	v0.10.2
-usgs-r/powstreams	v0.7.15
+usgs-r/powstreams	v0.7.16
 usgs-r/smwrStats	0.7.2
 usgs-r/smwrQW	v0.7.5
 usgs-r/GSqwsr	1.2.0
@@ -29,3 +29,4 @@ ldecicco-usgs/EGRET	u0.0.4
 usgs-r/EGRETextra	v0.0.2
 usgs-r/WQ-Review	v1.0
 usgs-r/SampleSplitting	2.0
+usgs-r/restrend	v0.4.1
