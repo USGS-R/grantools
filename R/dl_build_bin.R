@@ -7,7 +7,7 @@
 #' 
 #' @import devtools tools
 #' @export
-dl_build_bin <- function(sync=FALSE, GRAN.dir = '../GRAN'){
+dl_build_bin <- function(sync=FALSE, GRAN.dir = './GRAN'){
 	################################################################################
 	## These options may need to be edited for your local system
 	## we try to infer the rest
