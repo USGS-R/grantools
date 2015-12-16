@@ -1,5 +1,5 @@
 package	tag
-usgs-r/dataRetrieval	2.4.2
+usgs-r/dataRetrieval	v2.4.3
 usgs-r/EGRET	2.4.1
 usgs-r/sbtools	v0.13.2
 usgs-r/geoknife	v1.1.1
@@ -30,3 +30,5 @@ usgs-r/EGRETextra	v0.0.2
 usgs-r/WQ-Review	v1.0
 usgs-r/SampleSplitting	2.0
 usgs-r/restrend	v0.4.1
+ldecicco-usgs/hydroMaps v0.0.0
+
