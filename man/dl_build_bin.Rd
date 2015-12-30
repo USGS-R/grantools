@@ -4,7 +4,7 @@
 \alias{dl_build_bin}
 \title{build GRAN binaries}
 \usage{
-dl_build_bin(sync = FALSE, GRAN.dir = "../GRAN")
+dl_build_bin(sync = FALSE, GRAN.dir = "./GRAN")
 }
 \arguments{
 \item{sync}{use S3 sync with packages?}
