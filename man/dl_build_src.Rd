@@ -4,7 +4,7 @@
 \alias{dl_build_src}
 \title{download and build packages w/ deps}
 \usage{
-dl_build_src(GRAN.dir = "../GRAN")
+dl_build_src(GRAN.dir = "./GRAN")
 }
 \arguments{
 \item{GRAN.dir}{local directory for GRAN built packages}
