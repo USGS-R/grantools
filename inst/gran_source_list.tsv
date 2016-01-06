@@ -1,7 +1,7 @@
 package	tag
 usgs-r/dataRetrieval	v2.4.4
 usgs-r/EGRET	2.4.1
-usgs-r/sbtools	v0.13.2
+usgs-r/sbtools	v0.13.4
 usgs-r/geoknife	v1.1.1
 usgs-r/streamMetabolizer	v0.7.1.3
 usgs-r/mda.streams	v0.8.8.7
@@ -14,7 +14,7 @@ GLEON/GLMr	v3.1.10
 USGS-R/EGRETci	v1.0.0
 usgs-r/smwrBase	v1.1.2
 usgs-r/smwrGraphs	v1.1.1
-usgs-r/glmtools	v0.10.2
+usgs-r/glmtools	v0.10.3
 usgs-r/powstreams	v0.7.16
 usgs-r/smwrStats	v0.7.4
 usgs-r/smwrQW	v0.7.7
