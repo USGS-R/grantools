@@ -7,7 +7,7 @@
 #' @import httr devtools
 #' @export
 dl_build_src <- function(GRAN.dir = './GRAN'){
-	repos=c(CRAN="https://cran.rstudio.com/", USGS='http://owi.usgs.gov/R')
+	repos=c(CRAN="http://cran.rstudio.com/", USGS='http://owi.usgs.gov/R')
 	
 	
 	################################################################################
