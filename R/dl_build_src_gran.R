@@ -27,6 +27,7 @@ dl_build_src <- function(GRAN.dir = './GRAN'){
 	unlink(file.path(GRAN.dir, 'src'), recursive=TRUE)
 	dir.create(src_dir, recursive = TRUE)
 	scratch = tempdir()
+	all_deps = data.frame()
 	
 	for(i in 1:nrow(packages)){
 		
@@ -38,7 +39,9 @@ dl_build_src <- function(GRAN.dir = './GRAN'){
 		
 		pkgdirname = Sys.glob(paste0(scratch, '/', packages$package[i], '/', basename(packages$package[i]), '*'))
 		
-		devtools::install_deps(pkgdirname,type = 'both')
+		all_deps = rbind(all_deps, as.data.frame(devtools::dev_package_deps(pkgdirname)))
+		
+		devtools::install_deps(pkgdirname,type = 'both', repos=repos)
 		
 		if(length(pkgdirname) > 1){
 			stop('too many files in downloaded zip, ambiguous build info')
@@ -59,6 +62,16 @@ dl_build_src <- function(GRAN.dir = './GRAN'){
 	}
 	
 	write_PACKAGES(src_dir, type='source')
+	
+	#now, install any missed packages using the local source directory 
+	# this is necessary if more than one package is added to GRAN at a time
+	# or GRAN is screwed up for some reason
+	missed_pkgs = all_deps$package[!all_deps$package %in% installed.packages()[,1]]
+	
+	if(length(missed_pkgs) > 0){
+		cat('Installing missed packages:', missed_pkgs)
+		install.packages(unique(missed_pkgs), type='source', repos=paste0('file:', GRAN.dir))
+	}
 }
 
 
