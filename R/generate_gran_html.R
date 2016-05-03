@@ -14,10 +14,9 @@
 generate_gran_html = function(GRAN.dir='./GRAN'){
 	
 	contribPaths <- c(source="src/contrib",
-		win64.binary="bin/windows/contrib/3.2",
-		mac.binary.mavericks="bin/macosx/mavericks/contrib/3.2")
+		win64.binary="bin/windows/contrib/3.2")#,
+		#mac.binary.mavericks="bin/macosx/mavericks/contrib/3.2")
 	
-	extractVignettes(GRAN.dir, contribPaths["source"])
 	extractVignettes(GRAN.dir, contribPaths["source"])
 	genReposControlFiles(GRAN.dir, contribPaths)
 	
