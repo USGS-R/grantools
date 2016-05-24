@@ -6,6 +6,7 @@
 
 
 language: r
+r: bioc-release
 sudo: required
 
 before_install:
