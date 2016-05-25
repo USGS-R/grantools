@@ -8,10 +8,14 @@
 #' 4. install.packages('biocViews', repos = c('http://bioconductor.org/packages/release/bioc', 'http://cran.rstudio.com'))
 #' 
 #' 
-#' @import biocViews
+#' 
 #' 
 #' @export
 generate_gran_html = function(GRAN.dir='./GRAN'){
+	
+	if(!require('biocViews')){
+		stop('biocViews package required')
+	}
 	
 	contribPaths <- c(source="src/contrib",
 		win64.binary="bin/windows/contrib/3.2",

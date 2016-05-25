@@ -13,10 +13,10 @@ Depends:
 Imports:
     httr,
     devtools,
-    tools, 
-    biocViews
+    tools
 Suggests:
-    testthat
+    testthat, 
+    biocViews
 License: CC0
 LazyData: true
 RoxygenNote: 5.0.1
