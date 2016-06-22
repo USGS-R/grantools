@@ -33,7 +33,7 @@ dl_build_src <- function(GRAN.dir = './GRAN'){
 		
 		url = paste0('http://github.com/', packages$package[i], '/archive/', packages$tag[i], '.zip')
 		
-		GET(url, write_disk(file.path(scratch, 'package.zip'), overwrite=TRUE))
+		GET(url, write_disk(file.path(scratch, 'package.zip'), overwrite=TRUE), timeout(600))
 		
 		unzip(file.path(scratch, 'package.zip'), exdir=file.path(scratch, packages$package[i]))
 		
