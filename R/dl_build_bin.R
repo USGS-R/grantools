@@ -4,7 +4,7 @@
 #' 
 #' @param sync use S3 sync with packages?
 #' @param GRAN.dir local directory for GRAN built packages
-#' 
+#' @param packages list of packages to build 
 #' @import devtools tools
 #' @export
 dl_build_bin <- function(packages, sync=FALSE, GRAN.dir = './GRAN'){
