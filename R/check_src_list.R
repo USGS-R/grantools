@@ -13,12 +13,31 @@ read_src_list <- function(path = NULL){
 	if(!is.null(path)){
 	  currentBuild <- read.table(path, sep='\t', header=TRUE,stringsAsFactors=FALSE)
 	  currentBuild$Version <- checkVs(currentBuild$Version)
-	  return(findNotMatched(new,currentBuild))
+	  newTaggedVersions <- findNotMatched(new,currentBuild)
+	  
+	  ############### TAKE THIS OUT LATER
+	  ## skipping the wrv and package for testing purposes  :(
+	  if(any(grepl("wrv",newTaggedVersions))){
+	    #wrvLine <- newTaggedVersions[which(grepl("wrv",newTaggedVersions$package)),]
+	    newTaggedVersions <- newTaggedVersions[-which(grepl("wrv",newTaggedVersions$package)),]
+	    #newTaggedVersions <- rbind(wrvLine,newTaggedVersions)
+	  }
+	  if(any(grepl("WQReview",newTaggedVersions))){
+	    newTaggedVersions <- newTaggedVersions[-which(grepl("WQReview",newTaggedVersions$package)),]
+	  }
+	  if(any(grepl("EflowStats",newTaggedVersions))){
+	    newTaggedVersions <- newTaggedVersions[-which(grepl("EflowStats",newTaggedVersions$package)),]
+	  }
+	  
+	  ############################
+	  print("New packages to download and build:")
+	  print(newTaggedVersions)
+	  return(newTaggedVersions)
+	  
 	} else {
+	  print(new)
 	  return(new)
 	}
-	
-  
 }
 
 #' check gran_src_tags

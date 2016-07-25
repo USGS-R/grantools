@@ -17,7 +17,7 @@ build_GRAN_all <- function(versions){
 	  orig.version = dir_version()
 		for (version in versions){
 		  set_version(version)
-			system("Rscript -e 'library(granbuild);dl_build_src();dl_build_bin()'")
+			system(paste0("Rscript -e 'library(granbuild);packages<-dl_build_src(",version,");dl_build_bin(packages=packages)'"))
 		}
 	  #reset version 
 	  set_version(orig.version)

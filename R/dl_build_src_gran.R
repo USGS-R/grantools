@@ -3,10 +3,11 @@
 #' Download and build GRAN packages w/ GRAN and CRAN deps
 #' 
 #' @param GRAN.dir local directory for GRAN built packages
-#' 
+#' @param returnPackageMods logical If \code{TRUE}, a data frame of packages that were downloaded and rebuilt is returned.  
+#' @param version character current version building sources for
 #' @import httr devtools
 #' @export
-dl_build_src <- function(GRAN.dir = './GRAN'){
+dl_build_src <- function(version,GRAN.dir = './GRAN', returnPackageMods = TRUE){
 	repos=c(CRAN="http://cran.rstudio.com/", USGS='http://owi.usgs.gov/R')
 	
 	
@@ -22,10 +23,19 @@ dl_build_src <- function(GRAN.dir = './GRAN'){
 	##Update all the local packages so we're always working with the latest
 	update.packages(ask=FALSE, lib.loc = Sys.getenv('R_LIBS_USER'), repos=repos)
 	
-	packages = read_src_list()
+	#current packages on GRAN
+	currentListPath <- "./granCurrent.tsv"
+	packages = read_src_list(currentListPath)
 	
-	unlink(file.path(GRAN.dir, 'src'), recursive=TRUE)
-	dir.create(src_dir, recursive = TRUE)
+	#unlink(file.path(GRAN.dir, 'src'), recursive=TRUE)   #need to delete only updated directories
+	#dir.create(src_dir, recursive = TRUE)
+	toDelete <-  sub(".*\\/","",packages$package)
+	if(dir.exists(file.path(GRAN.dir, 'src'))){
+	  system(paste("rm",paste0(paste0(src_dir,"/",toDelete,"*"),collapse=" "))) #delete any existing version of toDelete packages
+	}else{
+	  dir.create(src_dir, recursive = TRUE)
+	}
+	
 	scratch = tempdir()
 	all_deps = data.frame()
 	
@@ -33,7 +43,7 @@ dl_build_src <- function(GRAN.dir = './GRAN'){
 		
 		url = paste0('http://github.com/', packages$package[i], '/archive/', packages$tag[i], '.zip')
 		
-		GET(url, write_disk(file.path(scratch, 'package.zip'), overwrite=TRUE), timeout(600))
+		GET(url, write_disk(file.path(scratch, 'package.zip'), overwrite=TRUE), timeout=600)
 		
 		unzip(file.path(scratch, 'package.zip'), exdir=file.path(scratch, packages$package[i]))
 		
@@ -72,6 +82,20 @@ dl_build_src <- function(GRAN.dir = './GRAN'){
 		cat('Installing missed packages:', missed_pkgs)
 		install.packages(unique(missed_pkgs), type='source', repos=paste0('file:', GRAN.dir))
 	}
+	
+	#write updated build list
+	oldList <- read.table(currentListPath, sep='\t', header=TRUE,stringsAsFactors=FALSE)
+	for(i in 1:nrow(packages)){ #could be vectorized?
+	  oldList[grepl(packages$package[i],oldList$Package),2] <- packages$tag[i]
+	}
+	updatedList <- oldList
+	write.table(updatedList,paste0(src_dir,"/updatedBuildTags_",version,".tsv"), quote = FALSE, row.names = FALSE)
+	
+	if(returnPackageMods){
+	  return(packages)
+	}
+	
+	
 }
 
 

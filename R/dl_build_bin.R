@@ -7,7 +7,7 @@
 #' 
 #' @import devtools tools
 #' @export
-dl_build_bin <- function(sync=FALSE, GRAN.dir = './GRAN'){
+dl_build_bin <- function(packages, sync=FALSE, GRAN.dir = './GRAN'){
 	################################################################################
 	## These options may need to be edited for your local system
 	## we try to infer the rest
@@ -16,7 +16,8 @@ dl_build_bin <- function(sync=FALSE, GRAN.dir = './GRAN'){
 	################################################################################
 	## /options
 	################################################################################
-	
+  packages$package <- sub(".*\\/","",packages$package) #remove repo and slash from package name
+  packages$tag <- substring(packages$tag,2)
 
 	
 	## You 
@@ -38,20 +39,27 @@ dl_build_bin <- function(sync=FALSE, GRAN.dir = './GRAN'){
 		stop('unrecognized OS type', os)
 	}
 	
-	gran_packages = available.packages(paste0('file:', src_dir), type='source')
+	#gran_packages = available.packages(paste0('file:', src_dir), type='source')
+	colnames(packages) <- c("Package","Version")
+	
+	#kill old versions or create directory
+	#unlink(file.path(build_dir), recursive=TRUE)
+	#dir.create(build_dir, recursive=TRUE)
+	toDelete <-  sub(".*\\/","",packages$package)
+	if(dir.exists(file.path(build_dir))){
+	  system(paste("rm",paste0(paste0(build_dir,"/",toDelete,"*"),collapse=" "))) #delete any existing version of toDelete packages
+	}else{
+	  dir.create(src_dir, recursive = TRUE)
+	}
 	
 	
-	#kill and create build dir (to eliminate old versions which could hang out)
-	unlink(file.path(build_dir), recursive=TRUE)
-	dir.create(build_dir, recursive=TRUE)
+	results = rep(1, nrow(packages))
 	
-	results = rep(1, nrow(gran_packages))
-	
-	for(i in 1:nrow(gran_packages)){
+	for(i in 1:nrow(packages)){
 		
-		package = paste0(gran_packages[i,'Package'], '_', gran_packages[i,'Version'], '.tar.gz')
-		binary = paste0(gran_packages[i,'Package'], '_', gran_packages[i,'Version'], build_ext)
-		package_path = file.path(src_dir, package)
+		thisPackage = paste0(packages[i,'Package'], '_', packages[i,'Version'], '.tar.gz')
+		binary = paste0(packages[i,'Package'], '_', packages[i,'Version'], build_ext)
+		package_path = file.path(src_dir, thisPackage)
 		binary_path = file.path('.', binary)
 		binary_dest = file.path(build_dir, binary)
 		
@@ -59,11 +67,11 @@ dl_build_bin <- function(sync=FALSE, GRAN.dir = './GRAN'){
 		
 		results[i] = system(cmd)
 		cat(rep('#',40), '\n')
-		cat(gran_packages[i,'Package'],':', results[i], '\n')
+		cat(packages[i,'Package'],':', results[i], '\n')
 		cat(rep('#',40), '\n')
 		
 		if(results[i] != 0){
-			warning(gran_packages[i,'Package'], 'failed while compiling!!')
+			warning(packages[i,'Package'], 'failed while compiling!!')
 		}
 		
 		file.rename(binary_path, binary_dest)
@@ -74,7 +82,15 @@ dl_build_bin <- function(sync=FALSE, GRAN.dir = './GRAN'){
 	}
 	
 	#Once done, write PACKAGES file, use default pkgType for this platform (mac/win)
+	currentListPath <- "./granCurrent.tsv"
 	write_PACKAGES(build_dir, type=pkg_type)
+	oldList <- read.table(currentListPath, sep='\t', header=TRUE,stringsAsFactors=FALSE)
+	for(i in 1:nrow(packages)){ #could be vectorized?
+	  oldList[grepl(packages$Package[i],oldList$Package),2] <- packages$Version[i]
+	}
+	updatedList <- oldList
+	write.table(updatedList,paste0(build_dir,"/updatedBuildTags.tsv"), quote = FALSE, row.names = FALSE)
+	
 	
 	## sync with GRAN
 	#email luke
