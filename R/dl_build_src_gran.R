@@ -4,10 +4,9 @@
 #' 
 #' @param GRAN.dir local directory for GRAN built packages
 #' @param returnPackageMods logical If \code{TRUE}, a data frame of packages that were downloaded and rebuilt is returned.  
-#' @param version character current version building sources for
 #' @import httr devtools
 #' @export
-dl_build_src <- function(version,GRAN.dir = './GRAN', returnPackageMods = TRUE){
+dl_build_src <- function(GRAN.dir = './GRAN'){
 	repos=c(CRAN="http://cran.rstudio.com/", USGS='http://owi.usgs.gov/R')
 	
 	
@@ -23,9 +22,11 @@ dl_build_src <- function(version,GRAN.dir = './GRAN', returnPackageMods = TRUE){
 	##Update all the local packages so we're always working with the latest
 	update.packages(ask=FALSE, lib.loc = Sys.getenv('R_LIBS_USER'), repos=repos)
 	
-	#current packages on GRAN
-	currentListPath <- "./granCurrent.tsv"
-	packages = read_src_list(currentListPath)
+	#current package source builds
+	sourceBuildList <- paste0(src_dir,"/buildTags.tsv")
+	packages = read_src_list(defaultPath = "gran_source_list.tsv", checkPath = sourceBuildList)
+	#TODO: read in packages from src/contrib tsv file, check against 
+	
 	
 	#unlink(file.path(GRAN.dir, 'src'), recursive=TRUE)   #need to delete only updated directories
 	#dir.create(src_dir, recursive = TRUE)
@@ -84,19 +85,26 @@ dl_build_src <- function(version,GRAN.dir = './GRAN', returnPackageMods = TRUE){
 	}
 	
 	#write updated build list
-	oldList <- read.table(currentListPath, sep='\t', header=TRUE,stringsAsFactors=FALSE)
-	for(i in 1:nrow(packages)){ #could be vectorized?
-	  oldList[grepl(packages$package[i],oldList$Package),2] <- packages$tag[i]
-	}
-	updatedList <- oldList
-	write.table(updatedList,paste0(src_dir,"/updatedBuildTags_",version,".tsv"), quote = FALSE, row.names = FALSE)
+	# oldList <- read.table(currentListPath, sep='\t', header=TRUE,stringsAsFactors=FALSE)
+	# for(i in 1:nrow(packages)){ #could be vectorized?
+	#   oldList[grepl(packages$package[i],oldList$Package),2] <- packages$tag[i]
+	# }
+	# updatedList <- oldList
+	# write.table(updatedList,paste0(src_dir,"/buildTags.tsv"), quote = FALSE, row.names = FALSE)
 	
-	if(returnPackageMods){
-	  return(packages)
-	}
-	
-	
+	writeBuildList(src_dir)
 }
 
+#' generate a build list file in a directory
+#' @param path character path to the folder to search for packages and write buildList in
 
+writeBuildList <- function(path){
+  fileNames <- grep(pattern = c("PACKAGE|buildList"), list.files(path), 
+                   value=TRUE, inv = TRUE)
+  buildDF <- data.frame()
+  packages <- sub( "_.*$", "", fileNames)
+  tags <- sub(".*_", "", sub( ".tar.*$", "", fileNames ))
+  df <- as.data.frame(cbind(packages, tags))
+  write.table(df,paste0(path,"/buildTags.tsv"), quote = FALSE, row.names = FALSE)
+}
 
