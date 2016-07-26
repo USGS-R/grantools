@@ -1,40 +1,39 @@
-#' check gran_src_list against current builds to find packages that need updated
-#' 
-#' checks list of packages for validity
-#' @param path character If a path is supplied, function will read that file and check \code{gran_source_list.tsv} against it.
-#' Packages/versions in \code{gran_source_list} that are not matched in the supplied file will be returned.  Defaults to \code{NULL}
-#' where the entire \code{gran_source_list} is returned.
+#' Checks for package file to exist in one location - if it does, it compares it to a known file and
+#' returns the packages that need to be updated.  Otherwise it returns the entire known list.
+#' @param checkPath character File path to the build list, generally either in src/contrib or bin/...
+#' @param defaultPath character path to file to compare checkPath to, or use if checkPath does not exist
 #' 
 #' @export
-read_src_list <- function(path = NULL){
+read_src_list <- function(checkPath, defaultPath){
 	
-	new <- read.table(system.file('gran_source_list.tsv',package='granbuild'), sep='\t', header=TRUE,stringsAsFactors=FALSE)
-	new$tag <- checkVs(new$tag)#column names case sensitive?
-	if(!is.null(path)){
-	  currentBuild <- read.table(path, sep='\t', header=TRUE,stringsAsFactors=FALSE)
-	  currentBuild$Version <- checkVs(currentBuild$Version)
+	new <- read.table(defaultPath, sep='\t', header=TRUE,stringsAsFactors=FALSE)
+	new$tag <- checkVs(new$tag)
+	if(file.exists(checkPath)){
+	  currentBuild <- read.table(checkPath, sep='\t', header=TRUE,stringsAsFactors=FALSE)
+	  currentBuild$tag <- checkVs(currentBuild$tag)
 	  newTaggedVersions <- findNotMatched(new,currentBuild)
 	  
 	  ############### TAKE THIS OUT LATER
 	  ## skipping the wrv and package for testing purposes  :(
-	  if(any(grepl("wrv",newTaggedVersions))){
-	    #wrvLine <- newTaggedVersions[which(grepl("wrv",newTaggedVersions$package)),]
-	    newTaggedVersions <- newTaggedVersions[-which(grepl("wrv",newTaggedVersions$package)),]
-	    #newTaggedVersions <- rbind(wrvLine,newTaggedVersions)
-	  }
-	  if(any(grepl("WQReview",newTaggedVersions))){
-	    newTaggedVersions <- newTaggedVersions[-which(grepl("WQReview",newTaggedVersions$package)),]
-	  }
-	  if(any(grepl("EflowStats",newTaggedVersions))){
-	    newTaggedVersions <- newTaggedVersions[-which(grepl("EflowStats",newTaggedVersions$package)),]
-	  }
+	  # if(any(grepl("wrv",newTaggedVersions))){
+	  #   #wrvLine <- newTaggedVersions[which(grepl("wrv",newTaggedVersions$package)),]
+	  #   newTaggedVersions <- newTaggedVersions[-which(grepl("wrv",newTaggedVersions$package)),]
+	  #   #newTaggedVersions <- rbind(wrvLine,newTaggedVersions)
+	  # }
+	  # if(any(grepl("WQReview",newTaggedVersions))){
+	  #   newTaggedVersions <- newTaggedVersions[-which(grepl("WQReview",newTaggedVersions$package)),]
+	  # }
+	  # if(any(grepl("EflowStats",newTaggedVersions))){
+	  #   newTaggedVersions <- newTaggedVersions[-which(grepl("EflowStats",newTaggedVersions$package)),]
+	  # }
 	  
 	  ############################
-	  print("New packages to download and build:")
+	  print("New packages to build:")
 	  print(newTaggedVersions)
 	  return(newTaggedVersions)
 	  
 	} else {
+	  print("New packages to build:")
 	  print(new)
 	  return(new)
 	}
@@ -62,7 +61,6 @@ check_src_tags <- function(){
 #' checks two data frames and returns rows in 1 that aren't matched in 2
 #' from \url{http://www.r-bloggers.com/identifying-records-in-data-frame-a-that-are-not-contained-in-data-frame-b-%E2%80%93-a-comparison/}
 #' 
-#' @import 
 #' 
 
 findNotMatched <- function(x.1,x.2){
@@ -74,10 +72,10 @@ findNotMatched <- function(x.1,x.2){
 
 #' checks if "v" is appended in a column of version numbers, and adds it if it is not
 #' @param input character 
-#' @import
 #' 
 checkVs <- function(input){
   noV <- tolower(substr(input,1,1))!="v" 
   input[noV] <- paste0("v",input[noV])
   return(input)
 }
+

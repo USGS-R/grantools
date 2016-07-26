@@ -24,7 +24,7 @@ dl_build_src <- function(GRAN.dir = './GRAN'){
 	
 	#current package source builds
 	sourceBuildList <- paste0(src_dir,"/buildTags.tsv")
-	packages = read_src_list(defaultPath = "gran_source_list.tsv", checkPath = sourceBuildList)
+	packages = read_src_list(defaultPath = "./inst/gran_source_list.tsv", checkPath = sourceBuildList)
 	#TODO: read in packages from src/contrib tsv file, check against 
 	
 	
@@ -32,7 +32,7 @@ dl_build_src <- function(GRAN.dir = './GRAN'){
 	#dir.create(src_dir, recursive = TRUE)
 	toDelete <-  sub(".*\\/","",packages$package)
 	if(dir.exists(file.path(GRAN.dir, 'src'))){
-	  system(paste("rm",paste0(paste0(src_dir,"/",toDelete,"*"),collapse=" "))) #delete any existing version of toDelete packages
+	  unlink(paste0(src_dir,"/",toDelete,"*")) #delete any existing version of toDelete packages
 	}else{
 	  dir.create(src_dir, recursive = TRUE)
 	}
@@ -97,14 +97,15 @@ dl_build_src <- function(GRAN.dir = './GRAN'){
 
 #' generate a build list file in a directory
 #' @param path character path to the folder to search for packages and write buildList in
+#' @export
 
 writeBuildList <- function(path){
-  fileNames <- grep(pattern = c("PACKAGE|buildList"), list.files(path), 
+  fileNames <- grep(pattern = c("PACKAGE|buildTags"), list.files(path), 
                    value=TRUE, inv = TRUE)
   buildDF <- data.frame()
-  packages <- sub( "_.*$", "", fileNames)
-  tags <- sub(".*_", "", sub( ".tar.*$", "", fileNames ))
-  df <- as.data.frame(cbind(packages, tags))
-  write.table(df,paste0(path,"/buildTags.tsv"), quote = FALSE, row.names = FALSE)
+  package <- sub( "_.*$", "", fileNames)
+  tag <- sub(".*_", "", sub( ".tar.*$", "", fileNames ))
+  df <- as.data.frame(cbind(package, tag))
+  write.table(df,paste0(path,"/buildTags.tsv"), quote = FALSE, row.names = FALSE,sep = "\t")
 }
 

@@ -4,10 +4,9 @@
 #' 
 #' @param sync use S3 sync with packages?
 #' @param GRAN.dir local directory for GRAN built packages
-#' @param packages list of packages to build 
 #' @import devtools tools
 #' @export
-dl_build_bin <- function(packages, sync=FALSE, GRAN.dir = './GRAN'){
+dl_build_bin <- function(sync=FALSE, GRAN.dir = './GRAN'){
 	################################################################################
 	## These options may need to be edited for your local system
 	## we try to infer the rest
@@ -16,10 +15,7 @@ dl_build_bin <- function(packages, sync=FALSE, GRAN.dir = './GRAN'){
 	################################################################################
 	## /options
 	################################################################################
-  packages$package <- sub(".*\\/","",packages$package) #remove repo and slash from package name
-  packages$tag <- substring(packages$tag,2)
-
-	
+  
 	## You 
 	os = Sys.info()['sysname']
 	r_maj_min = dir_version()
@@ -39,6 +35,14 @@ dl_build_bin <- function(packages, sync=FALSE, GRAN.dir = './GRAN'){
 		stop('unrecognized OS type', os)
 	}
 	
+	#check build_dir for buildList and compare to source list, or just use source list
+	packages <- read_src_list(defaultPath = paste0(src_dir,"/buildTags.tsv"), 
+	                          checkPath = paste0(build_dir,"/buildTags.tsv"))
+	
+	
+	packages$package <- sub(".*\\/","",packages$package) #remove repo and slash from package name
+	packages$tag <- substring(packages$tag,2)
+	
 	#gran_packages = available.packages(paste0('file:', src_dir), type='source')
 	colnames(packages) <- c("Package","Version")
 	
@@ -47,9 +51,9 @@ dl_build_bin <- function(packages, sync=FALSE, GRAN.dir = './GRAN'){
 	#dir.create(build_dir, recursive=TRUE)
 	toDelete <-  sub(".*\\/","",packages$package)
 	if(dir.exists(file.path(build_dir))){
-	  system(paste("rm",paste0(paste0(build_dir,"/",toDelete,"*"),collapse=" "))) #delete any existing version of toDelete packages
+	  unlink(paste0(build_dir,"/",toDelete,"*")) #delete any existing version of toDelete packages
 	}else{
-	  dir.create(src_dir, recursive = TRUE)
+	  dir.create(build_dir, recursive = TRUE)
 	}
 	
 	
@@ -82,15 +86,8 @@ dl_build_bin <- function(packages, sync=FALSE, GRAN.dir = './GRAN'){
 	}
 	
 	#Once done, write PACKAGES file, use default pkgType for this platform (mac/win)
-	currentListPath <- "./granCurrent.tsv"
 	write_PACKAGES(build_dir, type=pkg_type)
-	oldList <- read.table(currentListPath, sep='\t', header=TRUE,stringsAsFactors=FALSE)
-	for(i in 1:nrow(packages)){ #could be vectorized?
-	  oldList[grepl(packages$Package[i],oldList$Package),2] <- packages$Version[i]
-	}
-	updatedList <- oldList
-	write.table(updatedList,paste0(build_dir,"/updatedBuildTags.tsv"), quote = FALSE, row.names = FALSE)
-	
+	writeBuildList(build_dir)
 	
 	## sync with GRAN
 	#email luke
