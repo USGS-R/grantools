@@ -13,21 +13,6 @@ read_src_list <- function(checkPath, defaultPath){
 	  currentBuild$tag <- checkVs(currentBuild$tag)
 	  newTaggedVersions <- findNotMatched(new,currentBuild)
 	  
-	  ############### TAKE THIS OUT LATER
-	  ## skipping the wrv and package for testing purposes  :(
-	  # if(any(grepl("wrv",newTaggedVersions))){
-	  #   #wrvLine <- newTaggedVersions[which(grepl("wrv",newTaggedVersions$package)),]
-	  #   newTaggedVersions <- newTaggedVersions[-which(grepl("wrv",newTaggedVersions$package)),]
-	  #   #newTaggedVersions <- rbind(wrvLine,newTaggedVersions)
-	  # }
-	  # if(any(grepl("WQReview",newTaggedVersions))){
-	  #   newTaggedVersions <- newTaggedVersions[-which(grepl("WQReview",newTaggedVersions$package)),]
-	  # }
-	  # if(any(grepl("EflowStats",newTaggedVersions))){
-	  #   newTaggedVersions <- newTaggedVersions[-which(grepl("EflowStats",newTaggedVersions$package)),]
-	  # }
-	  
-	  ############################
 	  print("New packages to build:")
 	  print(newTaggedVersions)
 	  return(newTaggedVersions)
@@ -59,13 +44,12 @@ check_src_tags <- function(){
 }
 
 #' checks two data frames and returns rows in 1 that aren't matched in 2
-#' from \url{http://www.r-bloggers.com/identifying-records-in-data-frame-a-that-are-not-contained-in-data-frame-b-%E2%80%93-a-comparison/}
+#' modified from \url{http://www.r-bloggers.com/identifying-records-in-data-frame-a-that-are-not-contained-in-data-frame-b-%E2%80%93-a-comparison/}
 #' 
-#' 
-
 findNotMatched <- function(x.1,x.2){
-  x.1p <- toupper(do.call("paste", x.1))
-  x.2p <- toupper(do.call("paste", x.2))
+  #remove repo and slash from package name
+  x.1p <- sub(".*\\/","",toupper(do.call("paste", x.1)))
+  x.2p <- sub(".*\\/","",toupper(do.call("paste", x.2)))
   ret <- x.1[! x.1p %in% x.2p, ]
   return(ret)
 }

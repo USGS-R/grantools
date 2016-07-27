@@ -3,7 +3,7 @@
 export(build_GRAN_all)
 export(check_src_tags)
 export(dir_version)
-export(dl_build_bin)
+export(build_bin)
 export(dl_build_src)
 export(generate_gran_html)
 export(jenkins_build_bin)
