@@ -4,6 +4,7 @@
 #' @param defaultPath character path to file to compare checkPath to, or use if checkPath does not exist
 #' @import utils
 #' @export
+#' 
 read_src_list <- function(checkPath, defaultPath){
 	
 	new <- read.table(defaultPath, sep='\t', header=TRUE,stringsAsFactors=FALSE)
@@ -32,7 +33,7 @@ read_src_list <- function(checkPath, defaultPath){
 #' @export
 check_src_tags <- function(){
 	
-	packages = read_src_list(defaultPath = './inst/gran_source_list.tsv', checkPath = 'notApath')
+	packages = read_src_list(defaultPath = system.file('gran_source_list.tsv',package = 'granbuild'), checkPath = 'notApath')
 	
 	for(i in 1:nrow(packages)){
 		url <- paste0('http://github.com/', packages$package[i], '/archive/', packages$tag[i], '.zip')
@@ -45,6 +46,7 @@ check_src_tags <- function(){
 
 #' checks two data frames and returns rows in 1 that aren't matched in 2
 #' modified from \url{http://www.r-bloggers.com/identifying-records-in-data-frame-a-that-are-not-contained-in-data-frame-b-%E2%80%93-a-comparison/}
+#' @export
 #' 
 findNotMatched <- function(x.1,x.2){
   #remove repo and slash from package name
@@ -56,6 +58,7 @@ findNotMatched <- function(x.1,x.2){
 
 #' checks if "v" is appended in a column of version numbers, and adds it if it is not
 #' @param input character 
+#' @export
 #' 
 checkVs <- function(input){
   noV <- tolower(substr(input,1,1))!="v" 

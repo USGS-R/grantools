@@ -1,6 +1,6 @@
 #' build all src and binaries for specified versions of R
 #' 
-#' builds binaries using \code{\link{dl_build_src}} and \code{\link{dl_build_bin}} for 
+#' builds binaries using \code{\link{dl_build_src}} and \code{\link{build_bin}} for 
 #' each of the versions specified with the \code{versions} parameter.
 #' 
 #' @param versions character vector of R major.minor versions (e.g., '3.2').

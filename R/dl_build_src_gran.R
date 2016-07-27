@@ -3,7 +3,6 @@
 #' Build GRAN packages w/ GRAN and CRAN deps
 #' 
 #' @param GRAN.dir local directory for GRAN built packages
-#' @param returnPackageMods logical If \code{TRUE}, a data frame of packages that were downloaded and rebuilt is returned.  
 #' @import httr 
 #' @import utils
 #' @import devtools

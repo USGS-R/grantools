@@ -1,6 +1,6 @@
 context("package list is valid")
 test_that("package list is valid", {
-	granSrcLoc <- './inst/gran_source_list.tsv'
+	granSrcLoc <- system.file('gran_source_list.tsv',package = 'granbuild')
   expect_is(read_src_list(granSrcLoc,granSrcLoc),'data.frame')
 })
 

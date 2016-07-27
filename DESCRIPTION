@@ -13,7 +13,8 @@ Depends:
 Imports:
     httr,
     devtools,
-    tools
+    tools,
+    utils
 Suggests:
     testthat, 
     biocViews
