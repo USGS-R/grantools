@@ -1,6 +1,7 @@
 context("package list is valid")
 test_that("package list is valid", {
-	expect_is(read_src_list(),'data.frame')
+	granSrcLoc <- './inst/gran_source_list.tsv'
+  expect_is(read_src_list(granSrcLoc,granSrcLoc),'data.frame')
 })
 
 context("package tags are valid")

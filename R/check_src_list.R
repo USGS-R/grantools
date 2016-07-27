@@ -2,7 +2,7 @@
 #' returns the packages that need to be updated.  Otherwise it returns the entire known list.
 #' @param checkPath character File path to the build list, generally either in src/contrib or bin/...
 #' @param defaultPath character path to file to compare checkPath to, or use if checkPath does not exist
-#' 
+#' @import utils
 #' @export
 read_src_list <- function(checkPath, defaultPath){
 	
@@ -28,11 +28,11 @@ read_src_list <- function(checkPath, defaultPath){
 #' 
 #' checks package tags for validity
 #' 
-#' 
+#' @importFrom httr HEAD
 #' @export
 check_src_tags <- function(){
 	
-	packages = read_src_list()
+	packages = read_src_list(defaultPath = './inst/gran_source_list.tsv', checkPath = 'notApath')
 	
 	for(i in 1:nrow(packages)){
 		url <- paste0('http://github.com/', packages$package[i], '/archive/', packages$tag[i], '.zip')

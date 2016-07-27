@@ -4,7 +4,9 @@
 #' 
 #' @param GRAN.dir local directory for GRAN built packages
 #' @param returnPackageMods logical If \code{TRUE}, a data frame of packages that were downloaded and rebuilt is returned.  
-#' @import httr devtools
+#' @import httr 
+#' @import utils
+#' @import devtools
 #' @export
 dl_build_src <- function(GRAN.dir = './GRAN'){
   repos=c(CRAN="http://cran.rstudio.com/", USGS='http://owi.usgs.gov/R')
@@ -88,11 +90,12 @@ dl_build_src <- function(GRAN.dir = './GRAN'){
 
 #' generate a build list file in a directory
 #' @param path character path to the folder to search for packages and write buildList in
+#' @import utils
 #' @export
 
 writeBuildList <- function(path){
   fileNames <- grep(pattern = c("PACKAGE|buildTags"), list.files(path), 
-                    value=TRUE, inv = TRUE)
+                    value=TRUE, invert = TRUE)
   buildDF <- data.frame()
   package <- sub( "_.*$", "", fileNames)
   tag <- sub(".*_", "", sub( ".tar.*$|.tgz", "", fileNames ))
