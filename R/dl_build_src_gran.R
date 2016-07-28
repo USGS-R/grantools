@@ -25,7 +25,7 @@ dl_build_src <- function(GRAN.dir = './GRAN'){
   
   #current package source builds
   sourceBuildList <- paste0(src_dir,"/buildTags.tsv")
-  packages = read_src_list(defaultPath = "./inst/gran_source_list.tsv", checkPath = sourceBuildList)
+  packages = read_src_list(defaultPath = system.file("gran_source_list.tsv",package = "granbuild"), checkPath = sourceBuildList)
   if(nrow(packages) > 0){
     toDelete <-  sub(".*\\/","",packages$package)
     if(dir.exists(file.path(GRAN.dir, 'src'))){
