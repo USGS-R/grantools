@@ -7,7 +7,7 @@
 writeBuildList(path)
 }
 \arguments{
-\item{path}{character path to the folder to search for packages and write buildList in}
+\item{path}{character path to the folder to write buildList in}
 }
 \description{
 generate a build list file in a directory

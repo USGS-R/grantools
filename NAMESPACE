@@ -2,7 +2,7 @@
 
 export(build_GRAN_all)
 export(build_bin)
-export(checkVs)
+export(checkAvailablePackages)
 export(check_src_tags)
 export(dir_version)
 export(dl_build_src)

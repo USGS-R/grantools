@@ -88,18 +88,13 @@ dl_build_src <- function(GRAN.dir = './GRAN'){
 }
 
 #' generate a build list file in a directory
-#' @param path character path to the folder to search for packages and write buildList in
+#' @param path character path to the folder to write buildList in
 #' @import utils
 #' @export
 
 writeBuildList <- function(path){
-  fileNames <- grep(pattern = c("PACKAGE|buildTags"), list.files(path), 
-                    value=TRUE, invert = TRUE)
-  buildDF <- data.frame()
-  package <- sub( "_.*$", "", fileNames)
-  tag <- sub(".*_", "", sub( ".tar.*$|.tgz", "", fileNames ))
-  df <- as.data.frame(cbind(package, tag))
-  write.table(df,paste0(path,"/buildTags.tsv"), quote = FALSE, row.names = FALSE,sep = "\t")
-  
+  file.copy(system.file("gran_source_list.tsv",package = 'granbuild'),
+            path, overwrite = TRUE)
+  file.rename(paste0(path,"/gran_source_list.tsv"),paste0(path,"/buildTags.tsv"))
 }
 

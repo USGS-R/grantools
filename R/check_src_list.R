@@ -8,10 +8,8 @@
 read_src_list <- function(checkPath, defaultPath){
 	
 	new <- read.table(defaultPath, sep='\t', header=TRUE,stringsAsFactors=FALSE)
-	new$tag <- checkVs(new$tag)
 	if(file.exists(checkPath)){
 	  currentBuild <- read.table(checkPath, sep='\t', header=TRUE,stringsAsFactors=FALSE)
-	  currentBuild$tag <- checkVs(currentBuild$tag)
 	  newTaggedVersions <- findNotMatched(new,currentBuild)
 	  
 	  print("New packages to build:")
@@ -56,13 +54,5 @@ findNotMatched <- function(x.1,x.2){
   return(ret)
 }
 
-#' checks if "v" is appended in a column of version numbers, and adds it if it is not
-#' @param input character 
-#' @export
-#' 
-checkVs <- function(input){
-  noV <- tolower(substr(input,1,1))!="v" 
-  input[noV] <- paste0("v",input[noV])
-  return(input)
-}
+
 

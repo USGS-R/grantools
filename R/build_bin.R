@@ -35,15 +35,11 @@ build_bin <- function(sync=FALSE, GRAN.dir = './GRAN'){
     stop('unrecognized OS type', os)
   }
   
-  #check build_dir for buildList and compare to source list, or just use source list
-  packages <- read_src_list(defaultPath = paste0(src_dir,"/buildTags.tsv"), 
-                            checkPath = paste0(build_dir,"/buildTags.tsv"))
+  #check available packages in bin and src folders and compare
+  packages <- checkAvailablePackages(src_dir, build_dir)
+  
   if(nrow(packages) > 0){
-    packages$package <- sub(".*\\/","",packages$package) #remove repo and slash from package name
-    packages$tag <- substring(packages$tag,2)
-    colnames(packages) <- c("Package","Version")
-    
-    toDelete <-  sub(".*\\/","",packages$package)
+    toDelete <-  packages$Package
     if(dir.exists(file.path(build_dir))){
       unlink(paste0(build_dir,"/",toDelete,"*")) #delete any existing version of toDelete packages
     }else{
@@ -81,7 +77,6 @@ build_bin <- function(sync=FALSE, GRAN.dir = './GRAN'){
     
     #Once done, write PACKAGES file, use default pkgType for this platform (mac/win)
     write_PACKAGES(build_dir, type=pkg_type)
-    writeBuildList(build_dir)
     
     ## sync with GRAN
     #email luke
@@ -98,4 +93,24 @@ build_bin <- function(sync=FALSE, GRAN.dir = './GRAN'){
   return(build_dir)
 }
 
+#' compare available packages in two directories
+#' @param src character path to source directory
+#' @param bin character path to binary directory
+#' @import utils
+#' @export
 
+checkAvailablePackages <- function(src,bin){
+  if(!file.exists(paste0(src,"/PACKAGES"))){
+    stop("PACKAGES does not exist in the src directory")
+  }
+  srcPack <- as.data.frame(available.packages(paste0('file:',src)), stringsAsFactors = FALSE)
+  srcPack <- srcPack[c('Package','Version')]
+  if(file.exists(paste0(bin,"/PACKAGES"))){
+    binPack <- as.data.frame(available.packages(paste0('file:',bin)), stringsAsFactors = FALSE)
+    binPack <- binPack[c('Package','Version')]
+    newPack <- findNotMatched(srcPack,binPack)
+  }else{
+    newPack <- srcPack
+  }
+  return(newPack) 
+}
