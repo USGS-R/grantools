@@ -1,24 +1,37 @@
-#' check gran_src_list
-#' 
-#' checks list of packages for validity
-#' 
-#' 
+#' Checks for package file to exist in one location - if it does, it compares it to a known file and
+#' returns the packages that need to be updated.  Otherwise it returns the entire known list.
+#' @param checkPath character File path to the build list, generally either in src/contrib or bin/...
+#' @param defaultPath character path to file to compare checkPath to, or use if checkPath does not exist
+#' @import utils
 #' @export
-read_src_list <- function(){
+#' 
+read_src_list <- function(checkPath, defaultPath){
 	
-	return(read.table(system.file('gran_source_list.tsv',package='granbuild'), sep='\t', header=TRUE,stringsAsFactors=FALSE))
-	
+	new <- read.table(defaultPath, sep='\t', header=TRUE,stringsAsFactors=FALSE)
+	if(file.exists(checkPath)){
+	  currentBuild <- read.table(checkPath, sep='\t', header=TRUE,stringsAsFactors=FALSE)
+	  newTaggedVersions <- findNotMatched(new,currentBuild)
+	  
+	  print("New packages to build:")
+	  print(newTaggedVersions)
+	  return(newTaggedVersions)
+	  
+	} else {
+	  print("New packages to build:")
+	  print(new)
+	  return(new)
+	}
 }
 
 #' check gran_src_tags
 #' 
 #' checks package tags for validity
 #' 
-#' 
+#' @importFrom httr HEAD
 #' @export
 check_src_tags <- function(){
 	
-	packages = read_src_list()
+	packages = read_src_list(defaultPath = system.file('gran_source_list.tsv',package = 'granbuild'), checkPath = 'notApath')
 	
 	for(i in 1:nrow(packages)){
 		url <- paste0('http://github.com/', packages$package[i], '/archive/', packages$tag[i], '.zip')
@@ -28,3 +41,18 @@ check_src_tags <- function(){
 	}
 	return(TRUE)
 }
+
+#' checks two data frames and returns rows in 1 that aren't matched in 2
+#' modified from \url{http://www.r-bloggers.com/identifying-records-in-data-frame-a-that-are-not-contained-in-data-frame-b-%E2%80%93-a-comparison/}
+#' @export
+#' 
+findNotMatched <- function(x.1,x.2){
+  #remove repo and slash from package name
+  x.1p <- sub(".*\\/","",toupper(do.call("paste", x.1)))
+  x.2p <- sub(".*\\/","",toupper(do.call("paste", x.2)))
+  ret <- x.1[! x.1p %in% x.2p, ]
+  return(ret)
+}
+
+
+

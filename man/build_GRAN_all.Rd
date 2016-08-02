@@ -10,12 +10,12 @@ build_GRAN_all(versions)
 \item{versions}{character vector of R major.minor versions (e.g., '3.2').}
 }
 \description{
-builds binaries using \code{\link{dl_build_src}} and \code{\link{dl_build_bin}} for 
+builds binaries using \code{\link{dl_build_src}} and \code{\link{build_bin}} for 
 each of the versions specified with the \code{versions} parameter.
 }
 \examples{
 \dontrun{
-build_GRAN_all(c('3.2','3.1'))
+build_GRAN_all(c('3.2','3.3'))
 }
 }
 
