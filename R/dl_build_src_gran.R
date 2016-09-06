@@ -8,7 +8,7 @@
 #' @import devtools
 #' @export
 dl_build_src <- function(GRAN.dir = './GRAN'){
-  repos=c(CRAN="http://cran.rstudio.com/", USGS='http://owi.usgs.gov/R')
+  repos=c(CRAN="https://cran.rstudio.com/", USGS='https://owi.usgs.gov/R')
   
   
   ################################################################################
@@ -39,7 +39,7 @@ dl_build_src <- function(GRAN.dir = './GRAN'){
     
     for(i in 1:nrow(packages)){
       
-      url = paste0('http://github.com/', packages$package[i], '/archive/', packages$tag[i], '.zip')
+      url = paste0('https://github.com/', packages$package[i], '/archive/', packages$tag[i], '.zip')
       
       GET(url, write_disk(file.path(scratch, 'package.zip'), overwrite=TRUE), timeout=600)
       

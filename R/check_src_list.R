@@ -34,7 +34,7 @@ check_src_tags <- function(){
 	packages = read_src_list(defaultPath = system.file('gran_source_list.tsv',package = 'granbuild'), checkPath = 'notApath')
 	
 	for(i in 1:nrow(packages)){
-		url <- paste0('http://github.com/', packages$package[i], '/archive/', packages$tag[i], '.zip')
+		url <- paste0('https://github.com/', packages$package[i], '/archive/', packages$tag[i], '.zip')
 		r <- HEAD(url)
 		if (r$status_code != 200)
 			stop(url,'returned status code',r$status_code)
@@ -44,7 +44,7 @@ check_src_tags <- function(){
 
 #' checks two data frames and returns rows in 1 that aren't matched in 2
 #' modified from \url{http://www.r-bloggers.com/identifying-records-in-data-frame-a-that-are-not-contained-in-data-frame-b-%E2%80%93-a-comparison/}
-#' @export
+#' 
 #' 
 findNotMatched <- function(x.1,x.2){
   #remove repo and slash from package name

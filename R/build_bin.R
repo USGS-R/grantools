@@ -6,7 +6,7 @@
 #' @param GRAN.dir local directory for GRAN built packages
 #' @import devtools tools
 #' @export
-build_bin <- function(sync=FALSE, GRAN.dir = './GRAN'){
+build_bin <- function(GRAN.dir = './GRAN'){
   ################################################################################
   ## These options may need to be edited for your local system
   ## we try to infer the rest
@@ -21,13 +21,11 @@ build_bin <- function(sync=FALSE, GRAN.dir = './GRAN'){
   r_maj_min = dir_version()
   if(os == 'Windows'){
     build_ext = '.zip'
-    s3_path = paste0('s3://owi.usgs.gov/R/bin/windows/contrib/', r_maj_min)
     build_dir = file.path(GRAN.dir, 'bin', 'windows', 'contrib', r_maj_min)
     pkg_type = 'win.binary'
     
   }else if(os == 'Darwin'){
     build_ext = '.tgz'
-    s3_path = paste0('s3://owi.usgs.gov/R/bin/macosx/mavericks/contrib/', r_maj_min)
     build_dir = file.path(GRAN.dir, 'bin', 'macosx', 'mavericks', 'contrib', r_maj_min)
     pkg_type = 'mac.binary' #can't use getOPtion('pkgType') with mavericks for some reason
     
@@ -77,16 +75,6 @@ build_bin <- function(sync=FALSE, GRAN.dir = './GRAN'){
     
     #Once done, write PACKAGES file, use default pkgType for this platform (mac/win)
     write_PACKAGES(build_dir, type=pkg_type)
-    
-    ## sync with GRAN
-    #email luke
-    # TODO: Implement S3 sync
-    #Delete src directory
-    if (sync){
-      system(paste0('aws s3 sync ', src_dir, ' ', s3_path, ' --delete'))
-      
-      system(paste0('aws s3 sync ', src_dir, ' ', s3_path, ' --delete'))
-    }
   }else{
     print("bin directory already up to date",quote = FALSE)
   }
