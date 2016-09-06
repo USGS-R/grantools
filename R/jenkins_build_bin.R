@@ -5,7 +5,7 @@
 #' @import tools
 #' @export
 jenkins_build_bin = function(){
-	options(repos=c(CRAN="http://cran.rstudio.com", USGS='http://owi.usgs.gov/R'))
+	options(repos=c(CRAN="https://cran.rstudio.com", USGS='https://owi.usgs.gov/R'))
 	
 	################################################################################
 	## These options may need to be edited for your local system
@@ -24,13 +24,11 @@ jenkins_build_bin = function(){
 	
 	if(os == 'Windows'){
 		build_ext = '.zip'
-		s3_path = paste0('s3://owi.usgs.gov/R/bin/windows/contrib/', r_maj_min)
 		build_dir = file.path(gran_dir, 'bin', 'windows', 'contrib', r_maj_min)
 		pkg_type = 'win.binary'
 		
 	}else if(os == 'Darwin'){
 		build_ext = '.tgz'
-		s3_path = paste0('s3://owi.usgs.gov/R/bin/macosx/mavericks/contrib/', r_maj_min)
 		build_dir = file.path(gran_dir, 'bin', 'macosx', 'mavericks', 'contrib', r_maj_min)
 		pkg_type = 'mac.binary' #can't use getOPtion('pkgType') with mavericks for some reason
 		

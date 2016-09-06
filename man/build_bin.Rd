@@ -4,12 +4,12 @@
 \alias{build_bin}
 \title{build GRAN binaries}
 \usage{
-build_bin(sync = FALSE, GRAN.dir = "./GRAN")
+build_bin(GRAN.dir = "./GRAN")
 }
 \arguments{
-\item{sync}{use S3 sync with packages?}
-
 \item{GRAN.dir}{local directory for GRAN built packages}
+
+\item{sync}{use S3 sync with packages?}
 }
 \description{
 build binary packages for GRAN from source
