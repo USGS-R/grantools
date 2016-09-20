@@ -78,7 +78,7 @@ jenkins_build_bin = function(){
 						if(i == 3){
 							stop('Error installing packages. Tried 3 times')
 						}else{
-								warning('Retrying package install')
+								warning('Retrying package install: ', gettext(e))
 						}
 						
 					})
