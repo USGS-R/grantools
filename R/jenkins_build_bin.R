@@ -36,7 +36,7 @@ jenkins_build_bin = function(){
 		stop('unrecognized OS type', os)
 	}
 	
-	repos = c(GRAN=paste0("file:",gran_dir), CRAN="http://cran.rstudio.com")
+	repos = c(GRAN=paste0("file:",gran_dir), CRAN="https://cran.rstudio.com")
 
 	gran_packages = available.packages(paste0('file:', src_dir), type='source')
 
@@ -65,10 +65,18 @@ jenkins_build_bin = function(){
 		to_install = all_deps[[1]][!all_deps[[1]] %in% as.vector(installed.packages()[,'Package'])]
 		
 		if(length(to_install) > 0){
-			install.packages(to_install, lib='gran_build_libs')
+		  
+  	  install.packages(to_install)
+  	  to_install = all_deps[[1]][!all_deps[[1]] %in% as.vector(installed.packages()[,'Package'])]
+  	  
+  	  if(length(to_install) > 0){
+  		  install.packages(to_install, repos=repos, type='source')
+  	  }
+					
 		}
 		
 		install.packages(gran_packages[i,'Package'], type='source', INSTALL_opts='--build', repos=repos)
+		
 
 		file.rename(binary_path, binary_dest)
 	}
