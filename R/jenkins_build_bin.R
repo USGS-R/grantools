@@ -65,24 +65,14 @@ jenkins_build_bin = function(){
 		to_install = all_deps[[1]][!all_deps[[1]] %in% as.vector(installed.packages()[,'Package'])]
 		
 		if(length(to_install) > 0){
-			
-			#retry install.packages three times
-			for(i in 1:3){
-				tryCatch({
-				  install.packages(to_install)
-				  
-				  to_install = all_deps[[1]][!all_deps[[1]] %in% as.vector(installed.packages()[,'Package'])]
-					install.packages(to_install, repos=repos, type='source')
-					break
-					}, error=function(e){
-						if(i == 3){
-							stop('Error installing packages. Tried 3 times')
-						}else{
-								warning('Retrying package install: ', gettext(e))
-						}
-						
-					})
-			}
+		  
+  	  install.packages(to_install)
+  	  to_install = all_deps[[1]][!all_deps[[1]] %in% as.vector(installed.packages()[,'Package'])]
+  	  
+  	  if(length(to_install) > 0){
+  		  install.packages(to_install, repos=repos, type='source')
+  	  }
+					
 		}
 		
 		install.packages(gran_packages[i,'Package'], type='source', INSTALL_opts='--build', repos=repos)
