@@ -49,7 +49,12 @@ dl_build_src <- function(GRAN.dir = './GRAN'){
       
       all_deps = rbind(all_deps, as.data.frame(devtools::dev_package_deps(pkgdirname)))
       
-      devtools::install_deps(pkgdirname,type = 'both', repos=repos)
+      for(i in 1:3){
+	      tryCatch({
+	      	devtools::install_deps(pkgdirname,type = 'both', repos=repos)
+	      	break
+	      }, error = function(e){print(e);})
+      }
       
       if(length(pkgdirname) > 1){
         stop('too many files in downloaded zip, ambiguous build info')
