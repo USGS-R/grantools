@@ -70,6 +70,8 @@ jenkins_build_bin = function(){
 			for(i in 1:3){
 				tryCatch({
 				  install.packages(to_install)
+				  
+				  to_install = all_deps[[1]][!all_deps[[1]] %in% as.vector(installed.packages()[,'Package'])]
 					install.packages(to_install, repos=repos, type='source')
 					break
 					}, error=function(e){
