@@ -1,6 +1,6 @@
 Package: granbuild
 Title: Build and check GRAN packages
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: c( person("Luke", "Winslow", role = c("aut", "cre"),
 		email = "lwinslow@usgs.gov"), 
 		person("Laura", "DeCicco", role = c("aut"),
