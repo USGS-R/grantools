@@ -69,7 +69,7 @@ jenkins_build_bin = function(){
 			#retry install.packages three times
 			for(i in 1:3){
 				tryCatch({
-					install.packages(to_install, repos=repos, type='source')
+					install.packages(to_install, repos=repos, type='both')
 					break
 					}, error=function(e){
 						if(i == 3){
