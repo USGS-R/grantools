@@ -7,9 +7,9 @@
 #' 
 read_src_list <- function(checkPath, defaultPath){
 	
-	new <- read.table(defaultPath, sep='\t', header=TRUE,stringsAsFactors=FALSE)
+	new <- read.table(defaultPath, header=TRUE,stringsAsFactors=FALSE)
 	if(file.exists(checkPath)){
-	  currentBuild <- read.table(checkPath, sep='\t', header=TRUE,stringsAsFactors=FALSE)
+	  currentBuild <- read.table(checkPath, header=TRUE,stringsAsFactors=FALSE)
 	  newTaggedVersions <- findNotMatched(new,currentBuild)
 	  
 	  print("New packages to build:")
