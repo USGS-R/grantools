@@ -9,7 +9,7 @@
 #' @import devtools
 #' @importFrom miniCRAN pkgDep
 #' @export
-dl_build_src <- function(GRAN.dir = './GRAN', lib=.libPaths()[1]){
+dl_build_src <- function(GRAN.dir = 'GRAN', lib=.libPaths()[1]){
   repos=c(CRAN="https://cran.rstudio.com/", USGS='https://owi.usgs.gov/R')
   
   
@@ -88,14 +88,17 @@ dl_build_src <- function(GRAN.dir = './GRAN', lib=.libPaths()[1]){
   } else {
     print("Source directory already up to date", quote = FALSE)
   }
+  granPkg <- available.packages(contriburl = contrib.url( paste0('file:', GRAN.dir)))
   
-  granPkg <- available.packages(repos = paste0('file:', GRAN.dir))
-  neededPkgs <- pkgDep(repos = c("https://cloud.r-project.org",GRAN.dir), 
-                        pkg = granPkg, suggests = FALSE)
-  new.packages <- neededPkgs[!(neededPkgs %in% installed.packages(lib=lib)[,"Package"])]
-  install.packages(new.packages, 
-                   repos = c(paste0('file:', GRAN.dir),"https://cloud.r-project.org"),
-                   lib=lib, ask = FALSE)
+  neededPkgs <- pkgDep(repos = c("https://cloud.r-project.org",paste0('file:', GRAN.dir)), 
+                        pkg = rownames(granPkg), suggests = FALSE)
+  needed.packages <- neededPkgs[!(neededPkgs %in% installed.packages(lib=lib)[,"Package"])]
+  if(length(needed.packages) > 0){
+    install.packages(needed.packages, 
+                     repos = c(paste0('file:', GRAN.dir),
+                               "https://cloud.r-project.org"),
+                     lib=lib, ask = FALSE)
+  }
 }
 
 #' generate a build list file in a directory
