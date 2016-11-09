@@ -97,7 +97,7 @@ dl_build_src <- function(GRAN.dir = 'GRAN', lib=.libPaths()[1]){
     install.packages(needed.packages, 
                      repos = c(paste0('file:', GRAN.dir),
                                "https://cloud.r-project.org"),
-                     lib=lib, ask = FALSE)
+                     lib=lib)
   }
 }
 
