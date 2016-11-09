@@ -2,7 +2,6 @@
 #' 
 #' build binary packages for GRAN from source
 #' 
-#' @param sync use S3 sync with packages?
 #' @param GRAN.dir local directory for GRAN built packages
 #' @import devtools tools
 #' @export
