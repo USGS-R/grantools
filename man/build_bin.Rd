@@ -8,8 +8,6 @@ build_bin(GRAN.dir = "./GRAN")
 }
 \arguments{
 \item{GRAN.dir}{local directory for GRAN built packages}
-
-\item{sync}{use S3 sync with packages?}
 }
 \description{
 build binary packages for GRAN from source
