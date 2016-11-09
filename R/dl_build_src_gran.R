@@ -3,11 +3,12 @@
 #' Build GRAN packages w/ GRAN and CRAN deps
 #' 
 #' @param GRAN.dir local directory for GRAN built packages
+#' @param lib local directory to install dependent packages
 #' @import httr 
 #' @import utils
 #' @import devtools
 #' @export
-dl_build_src <- function(GRAN.dir = './GRAN'){
+dl_build_src <- function(GRAN.dir = './GRAN', lib=.libPaths()[1]){
   repos=c(CRAN="https://cran.rstudio.com/", USGS='https://owi.usgs.gov/R')
   
   
@@ -21,7 +22,7 @@ dl_build_src <- function(GRAN.dir = './GRAN'){
   ################################################################################
   
   ##Update all the local packages so we're always working with the latest
-  update.packages(ask=FALSE, lib.loc = Sys.getenv('R_LIBS_USER'), repos=repos)
+  update.packages(ask=FALSE, lib.loc = lib, repos=repos)
   
   #current package source builds
   sourceBuildList <- paste0(src_dir,"/buildTags.tsv")
@@ -51,7 +52,7 @@ dl_build_src <- function(GRAN.dir = './GRAN'){
       
       for(i in 1:3){
 	      tryCatch({
-	      	devtools::install_deps(pkgdirname,type = 'both', repos=repos)
+	      	devtools::install_deps(pkgdirname,type = 'both', repos=repos, lib=lib)
 	      	break
 	      }, error = function(e){print(e);})
       }
