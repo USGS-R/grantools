@@ -14,7 +14,8 @@ Imports:
     httr,
     devtools,
     tools,
-    utils
+    utils,
+    miniCRAN
 Suggests:
     testthat
 License: CC0
