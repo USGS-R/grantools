@@ -75,12 +75,15 @@ dl_build_src <- function(GRAN.dir = './GRAN', lib=.libPaths()[1]){
     #now, install any missed packages using the local source directory 
     # this is necessary if more than one package is added to GRAN at a time
     # or GRAN is screwed up for some reason
-
+    cat("All dependencies:",all_deps)
+    
     missed_pkgs = all_deps$package[!all_deps$package %in% installed.packages()[,1]]
+    
+    cat("Missing dependencies:",all_deps)
     
     if(length(missed_pkgs) > 0){
       cat('Installing missed packages:', missed_pkgs)
-      install.packages(unique(missed_pkgs), type='source', repos=paste0('file:', GRAN.dir), lib=lib, ask = FALSE)
+      install.packages(unique(missed_pkgs), repos=paste0('file:', GRAN.dir), lib=lib, ask = FALSE)
     }
     
     writeBuildList(src_dir)
