@@ -79,7 +79,7 @@ dl_build_src <- function(GRAN.dir = './GRAN', lib=.libPaths()[1]){
     
     if(length(missed_pkgs) > 0){
       cat('Installing missed packages:', missed_pkgs)
-      install.packages(unique(missed_pkgs), type='source', repos=paste0('file:', GRAN.dir))
+      install.packages(unique(missed_pkgs), type='source', repos=paste0('file:', GRAN.dir), lib=lib)
     }
     
     writeBuildList(src_dir)
