@@ -3,6 +3,7 @@
 export(build_GRAN_all)
 export(build_bin)
 export(checkAvailablePackages)
+export(checkNumbers)
 export(check_src_tags)
 export(dir_version)
 export(dl_build_src)
