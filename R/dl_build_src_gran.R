@@ -23,7 +23,8 @@ dl_build_src <- function(GRAN.dir = 'GRAN', lib=.libPaths()[1]){
   ################################################################################
   
   ##Update all the local packages so we're always working with the latest
-  update.packages(lib.loc = lib, repos=repos, ask = FALSE )
+  update.packages(lib.loc = lib, repos=repos, ask = FALSE, 
+                  type = "binary", contriburl = contrib.url(paste0('file:', GRAN.dir)))
   
   #current package source builds
   sourceBuildList <- paste0(src_dir,"/buildTags.tsv")

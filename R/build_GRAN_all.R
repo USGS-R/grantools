@@ -15,10 +15,9 @@ build_GRAN_all <- function(versions){
 	os = Sys.info()['sysname']
 	if (os == 'Darwin'){
 	  orig.version = dir_version()
-	  system("Rscript -e 'library(granbuild);dl_build_src()'")
 	  for (version in versions){
 		  set_version(version)
-			system("Rscript -e 'library(granbuild);build_bin()'")
+			system("Rscript -e 'library(granbuild); dl_build_src(); build_bin()'")
 		}
 	  #reset version 
 	  set_version(orig.version)
