@@ -36,7 +36,7 @@ makeDepGraphFromDescription <- function(file, suggests = TRUE, enhances = FALSE,
       # TODO check here and recursively call this function if package is in gran list
       pkgGraph <- makeDepGraph(package, suggests = suggests,
                                enhances = enhances, includeBasePkgs = includeBasePkgs)
-      depGraph <- depGraph + pkgGraph + edge(pkgName, package)
+      depGraph <- depGraph + pkgGraph + edge(package, pkgName)
     }
   }
   return(depGraph)
