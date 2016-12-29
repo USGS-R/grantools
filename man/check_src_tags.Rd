@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_src_list.R
 \name{check_src_tags}
 \alias{check_src_tags}
-\title{check gran_src_tags}
+\title{check_src_tags}
 \usage{
 check_src_tags()
 }
