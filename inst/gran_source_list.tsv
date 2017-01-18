@@ -3,8 +3,8 @@ usgs-r/dataRetrieval	v2.6.6
 usgs-r/EGRET	2.6.0
 usgs-r/sbtools	v1.1.5
 usgs-r/geoknife	v1.5.2
-usgs-r/streamMetabolizer	v0.9.18
-usgs-r/mda.streams	v0.9.12
+usgs-r/streamMetabolizer	v0.9.33
+usgs-r/mda.streams	v0.9.14
 usgs-r/USGSHydroOpt	v1.0.1
 usgs-r/smwrData	v1.1.1
 usgs-r/hazardItems	v2.2.0
