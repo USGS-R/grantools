@@ -19,11 +19,9 @@ env:
      - _R_CHECK_FORCE_SUGGESTS_=false
      
 notifications:
-  slack: usgs-cida:Cx7V5bobjgTw7U30GYzTvtHa
-
-warnings_are_errors: true
-
-notifications:
+  slack: usgs-cida:Cx7V5bobjgTw7U30GYzTvtHa 
+    on_success: change
+    on_failure: change 
   email:
     on_success: change
     on_failure: change
