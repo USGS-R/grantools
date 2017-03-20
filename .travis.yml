@@ -4,19 +4,27 @@
 # see the wiki:
 #   https://github.com/craigcitro/r-travis/wiki
 
-
 language: r
-r: bioc-release
-sudo: required
+cache: packages
+r:
+#  - oldrel
+  - release
+#  - devel
+sudo: false
 
-before_install:
-  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
-  - chmod 755 ./travis-tool.sh
+env:
+   global:
+     - R_BUILD_ARGS="--no-build-vignettes --no-manual"
+     - R_CHECK_ARGS="--no-build-vignettes --no-manual --as-cran"
+     - _R_CHECK_FORCE_SUGGESTS_=false
+     
+notifications:
+  slack: usgs-cida:Cx7V5bobjgTw7U30GYzTvtHa
 
-script: ./travis-tool.sh run_tests
-
+warnings_are_errors: true
 
 notifications:
   email:
     on_success: change
     on_failure: change
+
