@@ -22,7 +22,5 @@ notifications:
   slack: usgs-cida:Cx7V5bobjgTw7U30GYzTvtHa 
     on_success: change
     on_failure: change 
-  email:
-    on_success: change
-    on_failure: change
+
 
