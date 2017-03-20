@@ -13,5 +13,7 @@ matrix:
     - os: linux
       r: release
 
+warnings_are_errors: false
+
 notifications:
   slack: usgs-cida:Cx7V5bobjgTw7U30GYzTvtHa 
