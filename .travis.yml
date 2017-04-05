@@ -4,19 +4,16 @@
 # see the wiki:
 #   https://github.com/craigcitro/r-travis/wiki
 
-
 language: r
-r: bioc-release
-sudo: required
+cache: packages
+sudo: false
 
-before_install:
-  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
-  - chmod 755 ./travis-tool.sh
+matrix:
+  include:
+    - os: linux
+      r: release
 
-script: ./travis-tool.sh run_tests
-
+warnings_are_errors: false
 
 notifications:
-  email:
-    on_success: change
-    on_failure: change
+  slack: usgs-cida:Cx7V5bobjgTw7U30GYzTvtHa 

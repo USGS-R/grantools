@@ -18,7 +18,7 @@ usgs-r/powstreams	v0.8.0
 usgs-r/smwrStats	v0.7.5
 usgs-r/smwrQW	v0.7.11
 usgs-r/rloadest	v0.4.4
-usgs-r/gsplot	v0.5.4
+usgs-r/gsplot	0.8.0
 appling/unitted	v0.2.7
 usgs-r/toxEval	v0.2.9
 usgs-r/EGRETextra	v0.0.2
@@ -28,7 +28,7 @@ usgs-r/hydroMap	v0.1.4
 usgs-r/SampleSplitting	v1.0.4
 usgs-r/DVstats	v0.3.3
 usgs-r/wateRuse	v1.0.6
-usgs-r/wrv	v1.1.1
+usgs-r/wrv	v1.1.2
 usgs-r/USGSmarkdowntemplates	v0.0.7
 usgs-r/grithub	0.10.0
 usgs-vizlab/vizlab	v0.1.7
