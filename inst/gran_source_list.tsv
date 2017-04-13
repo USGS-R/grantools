@@ -3,8 +3,8 @@ usgs-r/dataRetrieval	v2.6.8.1
 usgs-r/EGRET	2.6.0
 usgs-r/sbtools	v.1.1.6
 usgs-r/geoknife	v1.5.4
-usgs-r/streamMetabolizer	v0.9.33
-usgs-r/mda.streams	v0.9.14
+usgs-r/streamMetabolizer	v0.10.1
+usgs-r/mda.streams	v0.9.15
 usgs-r/USGSHydroOpt	v1.0.1
 usgs-r/smwrData	v1.1.1
 usgs-r/hazardItems	v2.3.0
@@ -19,7 +19,7 @@ usgs-r/smwrStats	v0.7.5
 usgs-r/smwrQW	v0.7.11
 usgs-r/rloadest	v0.4.4
 usgs-r/gsplot	0.8.0
-appling/unitted	v0.2.7
+appling/unitted	v0.2.8
 usgs-r/toxEval	v0.2.9
 usgs-r/EGRETextra	v0.0.2
 usgs-r/WQ-Review	1.3.1
