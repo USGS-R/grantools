@@ -4,7 +4,7 @@
 #' each of the versions specified with the \code{versions} parameter.
 #' 
 #' @param versions character vector of R major.minor versions (e.g., '3.2').
-#' 
+#' @importFrom utils compareVersion
 #' @examples 
 #' \dontrun{
 #' build_GRAN_all(c('3.2','3.3'))
@@ -15,10 +15,15 @@ build_GRAN_all <- function(versions){
 	os = Sys.info()['sysname']
 	if (os == 'Darwin'){
 	  orig.version = dir_version()
-	  system("Rscript -e 'library(granbuild);dl_build_src()'")
-	  for (version in versions){
-		  set_version(version)
-			system("Rscript -e 'library(granbuild);build_bin()'")
+	  versions <- versions[order(as.numeric(versions), decreasing = TRUE)]
+	  for (i in 1:length(versions)){
+		  set_version(versions[i])
+	    #only build source for latest version
+	    if(i == 1) {
+	      system("Rscript -e 'library(granbuild); dl_build_src(); build_bin()'")
+	    } else {
+	      system("Rscript -e 'library(granbuild);  build_bin()'")
+	    }
 		}
 	  #reset version 
 	  set_version(orig.version)

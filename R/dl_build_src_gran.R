@@ -23,7 +23,8 @@ dl_build_src <- function(GRAN.dir = 'GRAN', lib=.libPaths()[1]){
   ################################################################################
   
   ##Update all the local packages so we're always working with the latest
-  update.packages(lib.loc = lib, repos=repos, ask = FALSE )
+  update.packages(lib.loc = lib, repos=repos, ask = FALSE, 
+                  type = "binary")
   
   #current package source builds
   sourceBuildList <- paste0(src_dir,"/buildTags.tsv")
@@ -51,7 +52,8 @@ dl_build_src <- function(GRAN.dir = 'GRAN', lib=.libPaths()[1]){
       
       all_deps = rbind(all_deps, as.data.frame(devtools::dev_package_deps(pkgdirname)))
 
-      devtools::install_deps(pkgdirname,type = 'both', repos=repos, lib=lib, ask = FALSE)
+      devtools::install_deps(pkgdirname, repos=repos, lib=lib, 
+                             type = "binary", ask = FALSE)
       
       if(length(pkgdirname) > 1){
         stop('too many files in downloaded zip, ambiguous build info')
@@ -81,7 +83,8 @@ dl_build_src <- function(GRAN.dir = 'GRAN', lib=.libPaths()[1]){
 
     if(length(missed_pkgs) > 0){
       cat('Installing missed packages:', missed_pkgs)
-      install.packages(unique(missed_pkgs), repos=paste0('file:', GRAN.dir), lib=lib, ask = FALSE)
+      install.packages(unique(missed_pkgs), repos=paste0('file:', GRAN.dir), lib=lib, 
+                       type = "binary", ask = FALSE)
     }
     
     writeBuildList(src_dir)
@@ -97,7 +100,7 @@ dl_build_src <- function(GRAN.dir = 'GRAN', lib=.libPaths()[1]){
     install.packages(needed.packages, 
                      repos = c(paste0('file:', GRAN.dir),
                                "https://cloud.r-project.org"),
-                     lib=lib)
+                     lib=lib, type = "binary")
   }
 }
 
