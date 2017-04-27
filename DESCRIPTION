@@ -15,7 +15,8 @@ Imports:
     devtools,
     tools,
     utils,
-    miniCRAN
+    miniCRAN,
+    igraph
 Suggests:
     testthat
 License: CC0
