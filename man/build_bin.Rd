@@ -12,4 +12,3 @@ build_bin(GRAN.dir = "./GRAN")
 \description{
 build binary packages for GRAN from source
 }
-

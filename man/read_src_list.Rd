@@ -16,4 +16,3 @@ Checks for package file to exist in one location, if it does it compares it to a
 known file and returns the packages that need to be updated. 
 Otherwise it returns the entire known list.
 }
-

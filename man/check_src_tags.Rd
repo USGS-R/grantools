@@ -9,4 +9,3 @@ check_src_tags()
 \description{
 checks package tags for validity
 }
-

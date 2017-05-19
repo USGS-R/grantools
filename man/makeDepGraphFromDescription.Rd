@@ -19,4 +19,3 @@ makeDepGraphFromDescription(file, suggests = TRUE, enhances = FALSE,
 \description{
 Borrows from makeDepGraph but works on package not yet built
 }
-

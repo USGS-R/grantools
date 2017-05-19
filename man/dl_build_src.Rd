@@ -14,4 +14,3 @@ dl_build_src(GRAN.dir = "GRAN", lib = .libPaths()[1])
 \description{
 Build GRAN packages w/ GRAN and CRAN deps
 }
-
