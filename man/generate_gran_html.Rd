@@ -13,4 +13,3 @@ There are many ways to do this:
 3. Rd2HTML (maybe?)
 4. install.packages('biocViews', repos = c('http://bioconductor.org/packages/release/bioc', 'http://cran.rstudio.com'))
 }
-

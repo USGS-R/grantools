@@ -12,4 +12,3 @@ writeBuildList(path)
 \description{
 generate a build list file in a directory
 }
-

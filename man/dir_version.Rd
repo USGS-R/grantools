@@ -12,4 +12,3 @@ Version of R as major.minor for current. As character.
 \examples{
 dir_version()
 }
-

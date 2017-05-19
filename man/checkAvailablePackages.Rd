@@ -14,4 +14,3 @@ checkAvailablePackages(src, bin)
 \description{
 compare available packages in two directories
 }
-

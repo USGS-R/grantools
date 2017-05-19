@@ -15,4 +15,3 @@ list representing order in which to install dependencies
 \description{
 Collapse dependency graph into list ordered from outside inward
 }
-
