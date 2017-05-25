@@ -1,6 +1,7 @@
 #!/bin/bash
 
 #do everything build_GRAN_all does for the mac build, then sync w/AWS
+#run this from the main package directory, not from ./inst!
 
 Rscript -e 'library(granbuild); build_GRAN_all(c('3.4', '3.3'))'
 
