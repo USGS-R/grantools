@@ -25,7 +25,10 @@ build_bin <- function(GRAN.dir = './GRAN'){
     
   }else if(os == 'Darwin'){
     build_ext = '.tgz'
-    build_dir = file.path(GRAN.dir, 'bin', 'macosx', 'mavericks', 'contrib', r_maj_min)
+    if(as.numeric(r_maj_min) > 3.3){
+      macBinOS <- "el-capitan"
+    } else {macBinOS <- "mavericks"}
+    build_dir = file.path(GRAN.dir, 'bin', 'macosx', macBinOS, 'contrib', r_maj_min)
     pkg_type = 'mac.binary' #can't use getOPtion('pkgType') with mavericks for some reason
     
   }else{
