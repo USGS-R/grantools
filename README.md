@@ -8,6 +8,12 @@ Tools for the Geological survey R Archive Network
 This package is considered a 'support' package. For more information, see:
 [https://owi.usgs.gov/R/packages.html#support](https://owi.usgs.gov/R/packages.html#support)
 
+### Package Support
+
+The Water Mission Area of the USGS supports the development and maintenance of `grantools` through September 2018, and most likely further into the future. Resources are available primarily for maintenance and responding to user questions. Priorities on the development of new features are determined by the `grantools` development team.
+
+![USGS](http://usgs-r.github.io/images/usgs.png)
+
 ## adding a package to GRAN
 
 see requirements for packages here: http://owi.usgs.gov/R/gran.html
