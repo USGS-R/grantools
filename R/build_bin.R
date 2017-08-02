@@ -1,6 +1,5 @@
 .onAttach <- function(libname, pkgname) {
-	packageStartupMessage("****USGS-Support Package****
-https://owi.usgs.gov/R/packages.html#support")
+	packageStartupMessage(paste(strwrap("USGS Support Package: https://owi.usgs.gov/R/packages.html#support"), collapse='\n'))
 }
 
 #' build GRAN binaries
