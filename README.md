@@ -12,7 +12,7 @@ This package is considered a 'support' package. For more information, see:
 
 The Water Mission Area of the USGS supports the development and maintenance of `grantools` through September 2018, and most likely further into the future. Resources are available primarily for maintenance and responding to user questions. Priorities on the development of new features are determined by the `grantools` development team.
 
-![USGS](http://usgs-r.github.io/images/usgs.png)
+[![USGS](http://usgs-r.github.io/images/usgs.png)](https://www.usgs.gov/)
 
 ## adding a package to GRAN
 
