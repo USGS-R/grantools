@@ -29,10 +29,10 @@ set_version <- function(version){
 	if (os == 'Darwin'){
 		current.pointer <- '/Library/Frameworks/R.framework/Versions/Current'
 		set.dir <- version
-		#if (dir.exists(set.dir))
+		if (dir.exists(set.dir))
 			system(sprintf('ln -sfhv %s %s', set.dir, current.pointer))
-		#else 
-			#warning(set.dir, ' does not exist.', call. = FALSE)
+		else 
+			warning(set.dir, ' does not exist.', call. = FALSE)
 	} else {
 		message('os ', os, ' is not currently supported')
 	}
