@@ -10,10 +10,7 @@ for ver in ${versions[@]}
 do
 	ln -sfhv $ver $pointer #change version
 
-	#have to be a directory up - is there a better alternative here?
-	cd ~/Documents/R
-	R CMD INSTALL --no-multiarch --with-keep.source grantools	
-	cd ~/Documents/R/grantools
+	R CMD INSTALL --no-multiarch --with-keep.source .	
 
 	#only build source for first version
 	if [ $ver == ${versions[0]} ]
