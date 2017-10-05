@@ -24,11 +24,11 @@ dir_version <- function(){
 #' }
 #' @export
 set_version <- function(version){
-	
+	.Deprecated(new = "shell script inst/mac_build.sh")
 	os = Sys.info()['sysname']
 	if (os == 'Darwin'){
 		current.pointer <- '/Library/Frameworks/R.framework/Versions/Current'
-		set.dir <- sprintf('/Library/Frameworks/R.framework/Versions/%s', version)
+		set.dir <- version
 		if (dir.exists(set.dir))
 			system(sprintf('ln -sfhv %s %s', set.dir, current.pointer))
 		else 

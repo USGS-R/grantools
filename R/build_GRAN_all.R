@@ -11,7 +11,7 @@
 #' }
 #' @export
 build_GRAN_all <- function(versions){
-	
+	.Deprecated(new = "shell script inst/mac_build.sh")
 	os = Sys.info()['sysname']
 	if (os == 'Darwin'){
 	  orig.version = dir_version()
