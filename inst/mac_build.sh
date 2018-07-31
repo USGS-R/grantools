@@ -4,7 +4,7 @@
 #run this from the main package directory, not from ./inst!
 
 pointer=/Library/Frameworks/R.framework/Versions/Current
-versions=(3.4 3.3)
+versions=(3.5 3.4 3.3)
 origVersion=$(readlink $pointer)
 for ver in ${versions[@]}
 do
