@@ -1,6 +1,6 @@
 package	tag
 usgs-r/dataRetrieval	v2.7.4
-usgs-r/EGRET	2.6.0
+usgs-r/EGRET	v3.0.2
 usgs-r/sbtools	v.1.1.6
 usgs-r/geoknife	v1.6.1
 appling/unitted	v0.2.9
@@ -25,7 +25,7 @@ usgs-r/EGRETextra	v0.0.2
 usgs-r/WQ-Review	2.0
 usgs-r/restrend	v0.4.2
 usgs-r/hydroMap	v0.1.4
-usgs-r/SampleSplitting	v1.0.4
+usgs-r/SampleSplitting	v1.0.5
 usgs-r/DVstats	v0.3.4
 usgs-r/wateRuse	v1.0.8
 usgs-r/wrv	v1.1.6
