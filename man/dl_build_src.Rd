@@ -4,12 +4,20 @@
 \alias{dl_build_src}
 \title{Build packages w/ deps}
 \usage{
-dl_build_src(GRAN.dir = "GRAN", lib = .libPaths()[1])
+dl_build_src(GRAN.dir = "GRAN", lib = .libPaths()[1], delete = TRUE,
+  use_GRAN = TRUE)
 }
 \arguments{
 \item{GRAN.dir}{local directory for GRAN built packages}
 
 \item{lib}{local directory to install dependent packages}
+
+\item{delete}{logical argument to over-ride deleting packages that 
+are already built. This is useful for major R upgrades. Default
+is \code{TRUE}.}
+
+\item{use_GRAN}{logical argument to include GRAN in updates. Default is 
+\code{TRUE}. Useful to use \code{FALSE} for major R upgrades.}
 }
 \description{
 Build GRAN packages w/ GRAN and CRAN deps
