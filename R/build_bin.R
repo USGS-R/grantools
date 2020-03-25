@@ -75,12 +75,14 @@ build_bin <- function(GRAN.dir = './GRAN'){
       file.rename(binary_path, binary_dest)
     }
     
+    write_PACKAGES(build_dir, type=pkg_type)
+    
     if(any(results!=0)){
       stop('Error in one of the package compiles')
     }
     
     #Once done, write PACKAGES file, use default pkgType for this platform (mac/win)
-    write_PACKAGES(build_dir, type=pkg_type)
+    
   }else{
     print("bin directory already up to date",quote = FALSE)
   }
