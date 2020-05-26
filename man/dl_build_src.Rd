@@ -4,8 +4,12 @@
 \alias{dl_build_src}
 \title{Build packages w/ deps}
 \usage{
-dl_build_src(GRAN.dir = "GRAN", lib = .libPaths()[1], delete = TRUE,
-  use_GRAN = TRUE)
+dl_build_src(
+  GRAN.dir = "GRAN",
+  lib = .libPaths()[1],
+  delete = TRUE,
+  use_GRAN = TRUE
+)
 }
 \arguments{
 \item{GRAN.dir}{local directory for GRAN built packages}

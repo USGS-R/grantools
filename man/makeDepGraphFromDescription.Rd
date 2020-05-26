@@ -4,8 +4,12 @@
 \alias{makeDepGraphFromDescription}
 \title{Borrows from makeDepGraph but works on package not yet built}
 \usage{
-makeDepGraphFromDescription(file, suggests = TRUE, enhances = FALSE,
-  includeBasePkgs = FALSE)
+makeDepGraphFromDescription(
+  file,
+  suggests = TRUE,
+  enhances = FALSE,
+  includeBasePkgs = FALSE
+)
 }
 \arguments{
 \item{file}{DESCRIPTION file path}
