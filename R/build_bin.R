@@ -29,7 +29,9 @@ build_bin <- function(GRAN.dir = './GRAN'){
     
   }else if(os == 'Darwin'){
     build_ext = '.tgz'
-    if(as.numeric(r_maj_min) > 3.3){
+    if(as.numeric(r_maj_min) >= 4.0) {
+      macBinOS <- "" #this directory level is dropped with R 4.0
+    } else if(as.numeric(r_maj_min) > 3.3 && as.numeric(r_maj_min) < 4.0){
       macBinOS <- "el-capitan"
     } else {macBinOS <- "mavericks"}
     build_dir = file.path(GRAN.dir, 'bin', 'macosx', macBinOS, 'contrib', r_maj_min)

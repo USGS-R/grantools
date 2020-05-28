@@ -4,7 +4,7 @@
 #run this from the main package directory, not from ./inst!
 
 pointer=/Library/Frameworks/R.framework/Versions/Current
-versions=(3.5 3.4 3.3)
+versions=(3.6 4.0)
 origVersion=$(readlink $pointer)
 for ver in ${versions[@]}
 do
@@ -24,6 +24,6 @@ done
 ln -sfhv $origVersion $pointer  #reset to original version
 
 #push to S3
-aws s3 sync ~/Documents/R/grantools/GRAN/bin/macosx/mavericks/contrib s3://owi-usgs-gov/R/bin/macosx/mavericks/contrib --delete --profile chsprod
+aws s3 sync ~/Documents/R/grantools/GRAN/bin/macosx/contrib s3://owi-usgs-gov/R/bin/macosx/contrib --delete --profile chsprod
 aws s3 sync ~/Documents/R/grantools/GRAN/bin/macosx/el-capitan/contrib s3://owi-usgs-gov/R/bin/macosx/el-capitan/contrib --delete --profile chsprod
 
