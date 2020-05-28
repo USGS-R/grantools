@@ -24,5 +24,6 @@ done
 ln -sfhv $origVersion $pointer  #reset to original version
 
 #push to S3
+aws s3 sync ~/Documents/R/grantools/GRAN/bin/macosx/contrib s3://owi-usgs-gov/R/bin/macosx/contrib --delete --profile chsprod
 aws s3 sync ~/Documents/R/grantools/GRAN/bin/macosx/el-capitan/contrib s3://owi-usgs-gov/R/bin/macosx/el-capitan/contrib --delete --profile chsprod
 
